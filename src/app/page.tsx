@@ -1,103 +1,798 @@
-import Image from "next/image";
+'use client';
+
+import { motion } from 'framer-motion';
+import { 
+  ChevronRightIcon, 
+  PhoneIcon, 
+  EnvelopeIcon, 
+  MapPinIcon,
+  UserGroupIcon,
+  ShieldCheckIcon,
+  HeartIcon,
+  PlayIcon
+} from '@heroicons/react/24/outline';
+import { useState, useEffect } from 'react';
+import Layout from '@/components/Layout';
+import NewsCard from '@/components/NewsCard';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [activeSlide, setActiveSlide] = useState(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const slides = [
+    {
+      title: "Pemberdayaan Perempuan",
+      subtitle: "Membangun Kesetaraan Gender untuk Masa Depan yang Lebih Baik",
+      description: "Mendorong partisipasi aktif perempuan dalam pembangunan daerah"
+    },
+    {
+      title: "Perlindungan Anak",
+      subtitle: "Melindungi Hak-Hak Anak untuk Masa Depan yang Cerah",
+      description: "Menjamin perlindungan dan kesejahteraan anak di Sumatera Barat"
+    },
+    {
+      title: "Keluarga Berencana",
+      subtitle: "Membangun Keluarga Berkualitas untuk Generasi Mendatang",
+      description: "Program KB yang berkelanjutan untuk kesejahteraan keluarga"
+    }
+  ];
+
+  // Function to handle slide change
+  const handleSlideChange = (index: number) => {
+    setActiveSlide(index);
+  };
+
+  // Auto-slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 7000); // Change slide every 7 seconds (lebih lama agar user bisa baca)
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  const news = [
+    {
+      id: 1,
+      title: "Renstra Dinas Pemberdayaan Perempuan dan Perlindungan Anak, Pengendalian Penduduk dan Keluarga Berencana 2021-2026",
+      date: "13 Juni 2025",
+      category: "Program",
+      views: 380,
+      excerpt: "Rencana strategis untuk pemberdayaan perempuan dan perlindungan anak dalam periode 2021-2026 yang mencakup berbagai program inovatif dan berkelanjutan untuk meningkatkan kualitas hidup masyarakat Sumatera Barat."
+    },
+    {
+      id: 2,
+      title: "PERJANJIAN KINERJA DP3AP2KB TAHUN 2024",
+      date: "13 Juni 2025",
+      category: "Program",
+      views: 351,
+      excerpt: "Komitmen kinerja dinas untuk tahun 2024 dalam melaksanakan berbagai program pemberdayaan perempuan, perlindungan anak, dan keluarga berencana dengan target-target yang telah ditetapkan."
+    },
+    {
+      id: 3,
+      title: "Rencana Aksi DP3AP2KB Tahun 2024",
+      date: "13 Juni 2025",
+      category: "Program",
+      views: 348,
+      excerpt: "Rencana aksi strategis untuk implementasi program-program prioritas dalam bidang pemberdayaan perempuan dan perlindungan anak serta pengendalian penduduk dan keluarga berencana."
+    }
+  ];
+
+  const services = [
+    {
+      icon: <UserGroupIcon className="w-8 h-8" />,
+      title: "Pemberdayaan Perempuan",
+      description: "Program pelatihan dan pemberdayaan ekonomi untuk perempuan"
+    },
+    {
+      icon: <ShieldCheckIcon className="w-8 h-8" />,
+      title: "Perlindungan Anak",
+      description: "Layanan perlindungan dan rehabilitasi untuk anak-anak"
+    },
+    {
+      icon: <HeartIcon className="w-8 h-8" />,
+      title: "Keluarga Berencana",
+      description: "Konsultasi dan layanan KB untuk keluarga berkualitas"
+    }
+  ];
+
+  const quickLinks = [
+    { title: "PPID", desc: "Pejabat Pengelola Informasi dan Dokumentasi" },
+    { title: "E-Layanan", desc: "Layanan Digital Terpadu" },
+    { title: "Pengaduan", desc: "Sistem Pengaduan Masyarakat" },
+    { title: "Download", desc: "Dokumen dan Formulir" }
+  ];
+
+  return (
+    <Layout>
+      {/* Hero Section */}
+      <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/90 to-blue-900/80"></div>
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform skew-x-12"></div>
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/5 to-transparent transform -skew-x-12"></div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Slides Container */}
+        <div className="relative h-full overflow-hidden">
+          <div 
+            className="flex h-full transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+          >
+            {slides.map((slide, index) => (
+              <div key={index} className="w-full h-full flex-shrink-0 relative">
+                <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                  <div className="max-w-6xl mx-auto text-center w-full">
+                    <motion.div
+                      className="mb-4 sm:mb-6 md:mb-8"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.3, duration: 0.8 }}
+                    >
+                      <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 sm:px-6 sm:py-3 mb-3 sm:mb-6">
+                        <div className="w-5 h-5 sm:w-8 sm:h-8 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-2 sm:mr-3">
+                          <span className="text-white font-bold text-xs sm:text-sm">🏛️</span>
+                        </div>
+                        <span className="text-white font-medium text-xs sm:text-sm">PEMERINTAH SUMATERA BARAT</span>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.h1 
+                      className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.5, duration: 0.8 }}
+                    >
+                      <span className="block text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-blue-200 mb-1 sm:mb-2 md:mb-3">
+                        {slide.title}
+                      </span>
+                      <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
+                        <span className="hidden sm:inline">{slide.subtitle}</span>
+                        <span className="sm:hidden">{slide.subtitle.split(' ').slice(0, 4).join(' ')}</span>
+                      </span>
+                    </motion.h1>
+                    
+                    <motion.p 
+                      className="text-sm sm:text-lg md:text-xl lg:text-2xl mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-blue-100 max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-2 sm:px-4"
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.7, duration: 0.8 }}
+                    >
+                      {slide.description}
+                    </motion.p>
+                    
+                    <motion.div
+                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center px-4 sm:px-6"
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.9, duration: 0.8 }}
+                    >
+                      <button className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-8 sm:py-4 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center max-w-xs sm:max-w-none">
+                        <span className="text-sm sm:text-base">Jelajahi Layanan</span>
+                        <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                      
+                      <button className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-8 sm:py-4 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center max-w-xs sm:max-w-none">
+                        <div className="w-7 h-7 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                          <PlayIcon className="w-3.5 h-3.5 sm:w-5 sm:h-5 ml-0.5" />
+                        </div>
+                        <span className="text-sm sm:text-base">Tonton Profil</span>
+                      </button>
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Navigation Arrows - Hide on mobile */}
+        <button
+          onClick={() => handleSlideChange(activeSlide === 0 ? slides.length - 1 : activeSlide - 1)}
+          className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-20"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <button
+          onClick={() => handleSlideChange(activeSlide === slides.length - 1 ? 0 : activeSlide + 1)}
+          className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-20"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
+        {/* Slide indicators */}
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 sm:space-x-4 z-20">
+          {slides.map((slide, index) => (
+            <button
+              key={index}
+              onClick={() => handleSlideChange(index)}
+              className={`group relative transition-all duration-500 ${
+                index === activeSlide ? 'scale-110' : 'hover:scale-105'
+              }`}
+              aria-label={`Slide ${index + 1}: ${slide.title}`}
+            >
+              <div className={`relative overflow-hidden rounded-full transition-all duration-500 ${
+                index === activeSlide 
+                  ? 'w-12 h-3 sm:w-16 sm:h-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 shadow-lg shadow-blue-400/50' 
+                  : 'w-3 h-3 sm:w-4 sm:h-4 bg-white/40 hover:bg-white/60'
+              }`}>
+                {index === activeSlide && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent animate-pulse"></div>
+                )}
+              </div>
+              
+              {/* Tooltip - Hide on mobile */}
+              <div className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                <div className="bg-white/95 backdrop-blur-sm text-gray-800 text-xs px-3 py-2 rounded-lg shadow-xl whitespace-nowrap">
+                  {slide.title}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white/95"></div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Scroll Indicator - Responsive */}
+        <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 text-white/70 z-20">
+          <motion.div 
+            className="flex flex-col items-center space-y-1 sm:space-y-2"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="text-xs sm:text-sm font-medium">Scroll</span>
+            <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/40 rounded-full flex justify-center relative overflow-hidden">
+              <motion.div 
+                className="w-0.5 h-2 sm:w-1 sm:h-3 bg-gradient-to-b from-white/70 to-white/30 rounded-full mt-1 sm:mt-2"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              className="w-6 h-6 sm:w-8 sm:h-8 border border-white/30 rounded-full flex items-center justify-center"
+            >
+              <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Quick Links Section */}
+      <section className="py-8 sm:py-12 bg-gradient-to-b from-white to-gray-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-6 sm:mb-8 md:mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Layanan Digital</h2>
+            <p className="text-sm sm:text-base text-gray-600 px-4 sm:px-0">Akses cepat ke berbagai layanan pemerintahan</p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {quickLinks.map((link, index) => (
+              <motion.a
+                key={index}
+                href="#"
+                className="group relative bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl border border-gray-100 hover:border-blue-200 transition-all duration-300 overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+              >
+                {/* Background Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div className="relative z-10">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white font-bold text-sm sm:text-lg">{link.title.slice(0, 2)}</span>
+                  </div>
+                  <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors">{link.title}</h3>
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{link.desc}</p>
+                  
+                  {/* Arrow Icon */}
+                  <div className="absolute top-3 sm:top-6 right-3 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-blue-100 transition-all duration-300">
+                    <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 group-hover:text-blue-600" />
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-10 sm:mb-12 md:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center bg-blue-50 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
+              <span className="text-blue-600 font-semibold text-xs sm:text-sm">🏛️ BIDANG PELAYANAN</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">Program Unggulan</h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+              Komitmen kami dalam membangun Sumatera Barat melalui pemberdayaan perempuan, 
+              perlindungan anak, dan program keluarga berencana yang berkelanjutan
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                className="group relative bg-white p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-2xl border border-gray-100 hover:border-blue-200 transition-all duration-500 overflow-hidden"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ y: -10 }}
+              >
+                {/* Background Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Icon Container */}
+                <div className="relative z-10 mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    {service.icon}
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                    {service.description}
+                  </p>
+                  
+                  {/* CTA Button */}
+                  <button className="group/btn inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-lg transition-colors duration-300">
+                    <span>Pelajari Lebih Lanjut</span>
+                    <ChevronRightIcon className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                  </button>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-blue-100/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-100/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Call to Action */}
+          <motion.div
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-10 py-4 rounded-full font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105">
+              Lihat Semua Program
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* News Section */}
+      <section className="py-10 sm:py-12 md:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-8 sm:mb-10 md:mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Berita Terbaru</h2>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">Update terkini dari DP3AP2KB Sumatera Barat mengenai program dan kegiatan yang sedang berlangsung</p>
+          </motion.div>
+          
+          {/* Featured News */}
+          <div className="mb-8 sm:mb-10 md:mb-12">
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* Main Featured News */}
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="h-40 sm:h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="relative z-10 text-center text-white">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                      <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                      </svg>
+                    </div>
+                    <span className="text-xs sm:text-sm font-medium">Berita Utama</span>
+                  </div>
+                </div>
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-center mb-3">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                      {news[0].category}
+                    </span>
+                    <span className="text-gray-500 text-xs sm:text-sm ml-3">{news[0].date}</span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
+                    {news[0].title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm sm:text-base">{news[0].excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm sm:text-base">
+                      Baca Selengkapnya
+                      <ChevronRightIcon className="w-4 h-4 ml-1" />
+                    </button>
+                    <span className="text-gray-500 text-xs sm:text-sm flex items-center">
+                      👁️ {news[0].views}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Side News */}
+              <div className="space-y-3 sm:space-y-4">
+                {news.slice(1, 3).map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <div className="flex">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-3 sm:p-4 flex-1">
+                        <div className="flex items-center mb-2">
+                          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">
+                            {item.category}
+                          </span>
+                          <span className="text-gray-500 text-xs ml-2">{item.date}</span>
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2 line-clamp-2 text-sm hover:text-blue-600 transition-colors cursor-pointer">
+                          {item.title}
+                        </h4>
+                        <div className="flex items-center justify-between">
+                          <button className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium">
+                            Baca
+                          </button>
+                          <span className="text-gray-500 text-xs flex items-center">
+                            👁️ {item.views}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* All News Grid */}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.4 }}
+          >
+            {news.map((item, index) => (
+              <motion.div
+                key={item.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
+                <div className="h-40 sm:h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="relative z-10 text-center text-white">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                      </svg>
+                    </div>
+                    <span className="text-xs font-medium opacity-90">Berita #{index + 1}</span>
+                  </div>
+                </div>
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-center mb-3">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                      {item.category}
+                    </span>
+                    <span className="text-gray-500 text-xs sm:text-sm ml-3">{item.date}</span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm">{item.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm">
+                      Baca Selengkapnya
+                      <ChevronRightIcon className="w-4 h-4 ml-1" />
+                    </button>
+                    <span className="text-gray-500 text-xs sm:text-sm flex items-center">
+                      👁️ {item.views}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.4 }}
+          >
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl">
+              Lihat Semua Berita
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-slate-900/90 to-blue-900/80"></div>
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform skew-x-12"></div>
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/5 to-transparent transform -skew-x-12"></div>
+          </div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            className="text-center mb-10 sm:mb-12 md:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-4 sm:mb-6 border border-white/20">
+              <span className="text-white font-semibold text-xs sm:text-sm">📊 STATISTIK WEBSITE</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6">Data Pengunjung</h2>
+            <p className="text-base sm:text-lg md:text-xl text-blue-200 max-w-2xl mx-auto px-4 sm:px-0">
+              Transparansi data kunjungan website DP3AP2KB Sumatera Barat
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+            {[
+              { number: "55", label: "Online", progress: 75, icon: "🟢" },
+              { number: "9,144", label: "Kemarin", progress: 85, icon: "📅" },
+              { number: "1,385", label: "Hari Ini", progress: 65, icon: "📈" },
+              { number: "3,707,161", label: "Total Visitor", progress: 100, icon: "👥" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="group relative bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all duration-500"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                {/* Icon */}
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  {stat.icon}
+                </div>
+                
+                {/* Number */}
+                <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors duration-300">
+                  {stat.number}
+                </div>
+                
+                {/* Label */}
+                <div className="text-blue-200 text-sm sm:text-base lg:text-lg font-medium mb-3 sm:mb-4">
+                  {stat.label}
+                </div>
+                
+                {/* Progress Bar */}
+                <div className="w-full bg-white/20 rounded-full h-2 sm:h-3 overflow-hidden">
+                  <motion.div 
+                    className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 sm:h-3 rounded-full shadow-lg"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${stat.progress}%` }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 1.5, delay: 0.5 + index * 0.2, ease: "easeOut" }}
+                  />
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Additional Info */}
+          <motion.div
+            className="text-center mt-10 sm:mt-12 md:mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <p className="text-blue-200 text-sm sm:text-base md:text-lg px-4 sm:px-0">
+              Data diperbarui secara real-time setiap hari untuk transparansi publik
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-10 sm:mb-12 md:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center bg-blue-50 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-4 sm:mb-6">
+              <span className="text-blue-600 font-semibold text-xs sm:text-sm">📞 HUBUNGI KAMI</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Informasi Kontak</h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+              Kami siap melayani dan memberikan informasi terkait program pemberdayaan perempuan, 
+              perlindungan anak, dan keluarga berencana
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12 md:mb-16">
+            {[
+              {
+                icon: <PhoneIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
+                title: "Telepon",
+                primary: "(0751) 7053781",
+                secondary: "Senin - Jumat: 08:00 - 16:00",
+                gradient: "from-blue-500 to-blue-600",
+                bg: "from-blue-50 to-blue-100",
+                border: "border-blue-200"
+              },
+              {
+                icon: <EnvelopeIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
+                title: "Email",
+                primary: "dp3ap2kb@sumbarprov.go.id",
+                secondary: "Respon dalam 1x24 jam",
+                gradient: "from-green-500 to-green-600",
+                bg: "from-green-50 to-green-100",
+                border: "border-green-200"
+              },
+              {
+                icon: <MapPinIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
+                title: "Alamat",
+                primary: "Jalan Rasuna Said Nomor 74 Padang",
+                secondary: "Sumatera Barat, Indonesia",
+                gradient: "from-orange-500 to-orange-600",
+                bg: "from-orange-50 to-orange-100",
+                border: "border-orange-200"
+              }
+            ].map((contact, index) => (
+              <motion.div
+                key={index}
+                className={`group relative text-center p-6 sm:p-8 bg-gradient-to-br ${contact.bg} rounded-2xl sm:rounded-3xl ${contact.border} border hover:shadow-2xl transition-all duration-500 overflow-hidden`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                {/* Background Effect */}
+                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Icon */}
+                <div className={`relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br ${contact.gradient} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                  {contact.icon}
+                </div>
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">{contact.title}</h3>
+                  <p className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg mb-2 break-words">{contact.primary}</p>
+                  <p className="text-gray-600 text-xs sm:text-sm md:text-base">{contact.secondary}</p>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Map Section */}
+          <motion.div
+            className="relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-100"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <div className="h-60 sm:h-72 md:h-80 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 flex items-center justify-center relative overflow-hidden">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12"></div>
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10 text-center text-blue-900 px-4">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+                  <MapPinIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+                </div>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Lokasi Kantor</h3>
+                <p className="text-sm sm:text-base md:text-lg mb-1">Dinas Pemberdayaan Perempuan dan Perlindungan Anak</p>
+                <p className="text-xs sm:text-sm md:text-base opacity-80 mb-4 sm:mb-6">Pengendalian Penduduk dan Keluarga Berencana</p>
+                
+                {/* Action Button */}
+                <button className="bg-blue-600 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base">
+                  Buka di Maps
+                </button>
+              </div>
+            </div>
+          </motion.div>
+          
+          {/* Office Hours */}
+          <motion.div
+            className="text-center mt-8 sm:mt-10 md:mt-12 p-6 sm:p-8 bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+          >
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Jam Pelayanan</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <p className="text-gray-600 font-medium text-sm sm:text-base">Hari Kerja</p>
+                <p className="text-xl sm:text-2xl font-bold text-blue-600">08:00 - 16:00</p>
+                <p className="text-xs sm:text-sm text-gray-500">Senin - Jumat</p>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-600 font-medium text-sm sm:text-base">Akhir Pekan</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-400">Tutup</p>
+                <p className="text-xs sm:text-sm text-gray-500">Sabtu - Minggu</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </Layout>
   );
 }
