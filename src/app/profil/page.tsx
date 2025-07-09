@@ -3,10 +3,8 @@
 import { motion } from 'framer-motion';
 import { 
   UserGroupIcon, 
-  BuildingOffice2Icon, 
   DocumentTextIcon,
-  AcademicCapIcon,
-  ChevronRightIcon
+  AcademicCapIcon
 } from '@heroicons/react/24/outline';
 import Layout from '@/components/Layout';
 import PPIDSection from '@/components/PPIDSection';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaFileAlt, FaDownload, FaCalendarAlt, FaEye, FaSearch, FaFilter, FaInfoCircle, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaFileAlt, FaDownload, FaCalendarAlt, FaSearch, FaInfoCircle, FaExternalLinkAlt } from 'react-icons/fa';
 import { MdGavel, MdDescription, MdInfo } from 'react-icons/md';
 
 interface PPIDDocument {

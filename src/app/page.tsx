@@ -9,12 +9,10 @@ import {
   BoltIcon,
   CubeIcon,
   FireIcon,
-  PlayIcon,
-  ChevronLeftIcon
+  PlayIcon
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
-import NewsCard from '@/components/NewsCard';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import TypewriterText from '@/components/TypewriterText';
 import AnimatedCounter from '@/components/AnimatedCounter';
@@ -308,18 +306,20 @@ export default function Home() {
       <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[
-              { title: "Izin Usaha Pertambangan", count: 125, suffix: "+", icon: "⚡" },
-              { title: "Sumber Energi Terbarukan", count: 85, suffix: "+", icon: "🌱" },
-              { title: "Lokasi Penambangan", count: 95, suffix: "+", icon: "💎" },
-              { title: "Program Pemberdayaan", count: 150, suffix: "+", icon: "🚀" }
-            ].map((stat, index) => {
-              const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.5 });
-              
-              return (
+            {/* Gunakan satu hook useIntersectionObserver per stat, bukan di dalam map */}
+            {(() => {
+              const stats = [
+                { title: "Izin Usaha Pertambangan", count: 125, suffix: "+", icon: "⚡" },
+                { title: "Sumber Energi Terbarukan", count: 85, suffix: "+", icon: "🌱" },
+                { title: "Lokasi Penambangan", count: 95, suffix: "+", icon: "💎" },
+                { title: "Program Pemberdayaan", count: 150, suffix: "+", icon: "🚀" }
+              ];
+              // Buat array refs dan isIntersecting
+              const refs = stats.map(() => useIntersectionObserver({ threshold: 0.5 }));
+              return stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  ref={ref}
+                  ref={refs[index].ref}
                   className="relative group"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -329,7 +329,6 @@ export default function Home() {
                   <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden">
                     {/* Background Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/10 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
                     {/* Floating Particles */}
                     <div className="absolute inset-0 overflow-hidden">
                       <motion.div
@@ -358,42 +357,38 @@ export default function Home() {
                         }}
                       />
                     </div>
-                    
                     <div className="relative z-10">
                       {/* Icon */}
                       <div className="text-3xl sm:text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
                         {stat.icon}
                       </div>
-                      
                       {/* Counter */}
                       <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                         <AnimatedCounter
                           target={stat.count}
                           suffix={stat.suffix}
                           duration={2500}
-                          isVisible={isIntersecting}
+                          isVisible={refs[index].isIntersecting}
                         />
                       </div>
-                      
                       {/* Title */}
                       <h3 className="text-sm sm:text-base font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
                         {stat.title}
                       </h3>
-                      
                       {/* Progress Bar */}
                       <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
                         <motion.div
                           className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                           initial={{ width: 0 }}
-                          animate={isIntersecting ? { width: "100%" } : { width: 0 }}
+                          animate={refs[index].isIntersecting ? { width: "100%" } : { width: 0 }}
                           transition={{ duration: 1.5, delay: 0.5 }}
                         />
                       </div>
                     </div>
                   </div>
                 </motion.div>
-              );
-            })}
+              ));
+            })()}
           </div>
         </div>
       </section>
@@ -950,7 +945,6 @@ export default function Home() {
             <SocialShare 
               url={typeof window !== 'undefined' ? window.location.href : ''}
               title="Dinas ESDM Sumatera Barat - Portal Resmi"
-              description="Portal resmi Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat"
               className="justify-center"
             />
           </motion.div>
