@@ -6,33 +6,38 @@ import {
   PhoneIcon, 
   EnvelopeIcon, 
   MapPinIcon,
-  UserGroupIcon,
-  ShieldCheckIcon,
-  HeartIcon,
-  PlayIcon
+  BoltIcon,
+  CubeIcon,
+  FireIcon,
+  PlayIcon,
+  ChevronLeftIcon
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import NewsCard from '@/components/NewsCard';
+import ParticlesBackground from '@/components/ParticlesBackground';
+import TypewriterText from '@/components/TypewriterText';
+import AnimatedCounter from '@/components/AnimatedCounter';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const slides = [
     {
-      title: "Pemberdayaan Perempuan",
-      subtitle: "Membangun Kesetaraan Gender untuk Masa Depan yang Lebih Baik",
-      description: "Mendorong partisipasi aktif perempuan dalam pembangunan daerah"
+      title: "Energi Berkelanjutan",
+      subtitle: "Membangun Masa Depan Energi Terbarukan untuk Sumatera Barat",
+      description: "Mengembangkan potensi energi terbarukan untuk kemajuan daerah"
     },
     {
-      title: "Perlindungan Anak",
-      subtitle: "Melindungi Hak-Hak Anak untuk Masa Depan yang Cerah",
-      description: "Menjamin perlindungan dan kesejahteraan anak di Sumatera Barat"
+      title: "Sumber Daya Mineral",
+      subtitle: "Pengelolaan Mineral Berkelanjutan dan Bertanggung Jawab",
+      description: "Optimalisasi kekayaan mineral untuk kesejahteraan rakyat"
     },
     {
-      title: "Keluarga Berencana",
-      subtitle: "Membangun Keluarga Berkualitas untuk Generasi Mendatang",
-      description: "Program KB yang berkelanjutan untuk kesejahteraan keluarga"
+      title: "Inovasi Teknologi",
+      subtitle: "Transformasi Digital Sektor Energi dan Pertambangan",
+      description: "Modernisasi teknologi untuk efisiensi dan transparansi"
     }
   ];
 
@@ -53,62 +58,65 @@ export default function Home() {
   const news = [
     {
       id: 1,
-      title: "Renstra Dinas Pemberdayaan Perempuan dan Perlindungan Anak, Pengendalian Penduduk dan Keluarga Berencana 2021-2026",
+      title: "Roadmap Energi Terbarukan Sumatera Barat 2024-2030",
       date: "13 Juni 2025",
-      category: "Program",
+      category: "Energi",
       views: 380,
-      excerpt: "Rencana strategis untuk pemberdayaan perempuan dan perlindungan anak dalam periode 2021-2026 yang mencakup berbagai program inovatif dan berkelanjutan untuk meningkatkan kualitas hidup masyarakat Sumatera Barat."
+      excerpt: "Rencana strategis pengembangan energi terbarukan di Sumatera Barat yang mencakup solar, hidro, dan geothermal untuk mencapai target net zero emission 2060."
     },
     {
       id: 2,
-      title: "PERJANJIAN KINERJA DP3AP2KB TAHUN 2024",
+      title: "Perjanjian Kinerja Dinas ESDM Sumatera Barat 2024",
       date: "13 Juni 2025",
       category: "Program",
       views: 351,
-      excerpt: "Komitmen kinerja dinas untuk tahun 2024 dalam melaksanakan berbagai program pemberdayaan perempuan, perlindungan anak, dan keluarga berencana dengan target-target yang telah ditetapkan."
+      excerpt: "Komitmen kinerja dalam pengelolaan energi dan sumber daya mineral dengan fokus pada keberlanjutan dan kesejahteraan masyarakat."
     },
     {
       id: 3,
-      title: "Rencana Aksi DP3AP2KB Tahun 2024",
+      title: "Rencana Aksi Pengelolaan Pertambangan Berkelanjutan 2024",
       date: "13 Juni 2025",
-      category: "Program",
+      category: "Pertambangan",
       views: 348,
-      excerpt: "Rencana aksi strategis untuk implementasi program-program prioritas dalam bidang pemberdayaan perempuan dan perlindungan anak serta pengendalian penduduk dan keluarga berencana."
+      excerpt: "Strategi pengelolaan pertambangan yang memperhatikan aspek lingkungan dan pemberdayaan masyarakat sekitar area tambang."
     }
   ];
 
   const services = [
     {
-      icon: <UserGroupIcon className="w-8 h-8" />,
-      title: "Pemberdayaan Perempuan",
-      description: "Program pelatihan dan pemberdayaan ekonomi untuk perempuan"
+      icon: <BoltIcon className="w-8 h-8" />,
+      title: "Energi Terbarukan",
+      description: "Pengembangan dan pengawasan sistem energi terbarukan di Sumatera Barat"
     },
     {
-      icon: <ShieldCheckIcon className="w-8 h-8" />,
-      title: "Perlindungan Anak",
-      description: "Layanan perlindungan dan rehabilitasi untuk anak-anak"
+      icon: <CubeIcon className="w-8 h-8" />,
+      title: "Pertambangan",
+      description: "Pengelolaan dan pengawasan kegiatan pertambangan yang berkelanjutan"
     },
     {
-      icon: <HeartIcon className="w-8 h-8" />,
-      title: "Keluarga Berencana",
-      description: "Konsultasi dan layanan KB untuk keluarga berkualitas"
+      icon: <FireIcon className="w-8 h-8" />,
+      title: "Migas",
+      description: "Pengelolaan minyak dan gas bumi untuk kesejahteraan masyarakat"
     }
   ];
 
   const quickLinks = [
     { title: "PPID", desc: "Pejabat Pengelola Informasi dan Dokumentasi" },
-    { title: "E-Layanan", desc: "Layanan Digital Terpadu" },
+    { title: "E-Layanan", desc: "Layanan Digital Terpadu ESDM" },
     { title: "Pengaduan", desc: "Sistem Pengaduan Masyarakat" },
-    { title: "Download", desc: "Dokumen dan Formulir" }
+    { title: "Download", desc: "Dokumen dan Formulir ESDM" }
   ];
 
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+        {/* Particles Background */}
+        <ParticlesBackground />
+        
         {/* Background Elements */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/90 to-blue-900/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-slate-900/80 to-blue-900/70"></div>
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform skew-x-12"></div>
             <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/5 to-transparent transform -skew-x-12"></div>
@@ -140,22 +148,32 @@ export default function Home() {
                     </motion.div>
                     
                     <motion.h1 
-                      className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
+                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.5, duration: 0.8 }}
                     >
-                      <span className="block text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-blue-200 mb-1 sm:mb-2 md:mb-3">
+                      <span className="block text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-blue-200 mb-1 sm:mb-2 md:mb-3">
                         {slide.title}
                       </span>
-                      <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight">
-                        <span className="hidden sm:inline">{slide.subtitle}</span>
-                        <span className="sm:hidden">{slide.subtitle.split(' ').slice(0, 4).join(' ')}</span>
+                      <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight block">
+                        <TypewriterText 
+                          text={slide.subtitle} 
+                          speed={50}
+                          delay={1000}
+                          className="hidden sm:inline"
+                        />
+                        <TypewriterText 
+                          text={slide.subtitle.split(' ').slice(0, 5).join(' ')} 
+                          speed={50}
+                          delay={1000}
+                          className="sm:hidden"
+                        />
                       </span>
                     </motion.h1>
                     
                     <motion.p 
-                      className="text-sm sm:text-lg md:text-xl lg:text-2xl mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-blue-100 max-w-sm sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-2 sm:px-4"
+                      className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100 max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.7, duration: 0.8 }}
@@ -164,22 +182,30 @@ export default function Home() {
                     </motion.p>
                     
                     <motion.div
-                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center px-4 sm:px-6"
+                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 mb-12 sm:mb-16"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.9, duration: 0.8 }}
                     >
-                      <button className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-8 sm:py-4 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center max-w-xs sm:max-w-none">
-                        <span className="text-sm sm:text-base">Jelajahi Layanan</span>
+                      <motion.button 
+                        className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs backdrop-blur-sm border border-white/10 text-sm sm:text-base"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span>Jelajahi Layanan</span>
                         <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                      </button>
+                      </motion.button>
                       
-                      <button className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-8 sm:py-4 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-center max-w-xs sm:max-w-none">
-                        <div className="w-7 h-7 sm:w-10 sm:h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                          <PlayIcon className="w-3.5 h-3.5 sm:w-5 sm:h-5 ml-0.5" />
+                      <motion.button 
+                        className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs text-sm sm:text-base"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                          <PlayIcon className="w-3 h-3 sm:w-4 sm:h-4 ml-0.5" />
                         </div>
-                        <span className="text-sm sm:text-base">Tonton Profil</span>
-                      </button>
+                        <span>Tonton Profil</span>
+                      </motion.button>
                     </motion.div>
                   </div>
                 </div>
@@ -267,6 +293,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Floating Stats Cards - Glassmorphism Effect */}
+      <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              { title: "Izin Usaha Pertambangan", count: 125, suffix: "+", icon: "⚡" },
+              { title: "Sumber Energi Terbarukan", count: 85, suffix: "+", icon: "🌱" },
+              { title: "Lokasi Penambangan", count: 95, suffix: "+", icon: "💎" },
+              { title: "Program Pemberdayaan", count: 150, suffix: "+", icon: "🚀" }
+            ].map((stat, index) => {
+              const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.5 });
+              
+              return (
+                <motion.div
+                  key={index}
+                  ref={ref}
+                  className="relative group"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                >
+                  {/* Glassmorphism Card */}
+                  <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden">
+                    {/* Background Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/10 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    {/* Floating Particles */}
+                    <div className="absolute inset-0 overflow-hidden">
+                      <motion.div
+                        className="absolute top-4 right-4 w-2 h-2 bg-blue-400/30 rounded-full"
+                        animate={{
+                          y: [0, -20, 0],
+                          opacity: [0.3, 0.8, 0.3]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <motion.div
+                        className="absolute bottom-6 left-6 w-1 h-1 bg-purple-400/40 rounded-full"
+                        animate={{
+                          y: [0, -15, 0],
+                          opacity: [0.4, 0.9, 0.4]
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1
+                        }}
+                      />
+                    </div>
+                    
+                    <div className="relative z-10">
+                      {/* Icon */}
+                      <div className="text-3xl sm:text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                        {stat.icon}
+                      </div>
+                      
+                      {/* Counter */}
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        <AnimatedCounter
+                          target={stat.count}
+                          suffix={stat.suffix}
+                          duration={2500}
+                          isVisible={isIntersecting}
+                        />
+                      </div>
+                      
+                      {/* Title */}
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
+                        {stat.title}
+                      </h3>
+                      
+                      {/* Progress Bar */}
+                      <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={isIntersecting ? { width: "100%" } : { width: 0 }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Quick Links Section */}
       <section className="py-8 sm:py-12 bg-gradient-to-b from-white to-gray-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -285,14 +405,30 @@ export default function Home() {
               <motion.a
                 key={index}
                 href="#"
-                className="group relative bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl border border-gray-100 hover:border-blue-200 transition-all duration-300 overflow-hidden"
+                className="group relative bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-blue-200/50 transition-all duration-500 overflow-hidden"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 whileHover={{ scale: 1.02, y: -5 }}
               >
                 {/* Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white/20 to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Floating Elements */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <motion.div
+                    className="absolute top-2 right-2 w-1 h-1 bg-blue-400/40 rounded-full"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.4, 0.8, 0.4]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
                 
                 <div className="relative z-10">
                   <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -323,12 +459,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center bg-blue-50 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4">
-              <span className="text-blue-600 font-semibold text-xs sm:text-sm">🏛️ BIDANG PELAYANAN</span>
+              <span className="text-blue-600 font-semibold text-xs sm:text-sm">⚡ BIDANG ESDM</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">Program Unggulan</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">Bidang Layanan ESDM</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-              Komitmen kami dalam membangun Sumatera Barat melalui pemberdayaan perempuan, 
-              perlindungan anak, dan program keluarga berencana yang berkelanjutan
+              Komitmen kami dalam membangun Sumatera Barat melalui pengelolaan energi terbarukan, 
+              pertambangan berkelanjutan, dan pemberdayaan sumber daya mineral untuk kesejahteraan rakyat
             </p>
           </motion.div>
           
@@ -385,7 +521,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-10 py-4 rounded-full font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105">
-              Lihat Semua Program
+              Lihat Semua Bidang ESDM
             </button>
           </motion.div>
         </div>
@@ -401,8 +537,8 @@ export default function Home() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Berita Terbaru</h2>
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">Update terkini dari DP3AP2KB Sumatera Barat mengenai program dan kegiatan yang sedang berlangsung</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Berita ESDM Terbaru</h2>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">Update terkini dari Dinas ESDM Sumatera Barat mengenai program energi terbarukan dan pertambangan berkelanjutan</p>
           </motion.div>
           
           {/* Featured News */}
@@ -590,7 +726,7 @@ export default function Home() {
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6">Data Pengunjung</h2>
             <p className="text-base sm:text-lg md:text-xl text-blue-200 max-w-2xl mx-auto px-4 sm:px-0">
-              Transparansi data kunjungan website DP3AP2KB Sumatera Barat
+              Transparansi data kunjungan website Dinas ESDM Sumatera Barat
             </p>
           </motion.div>
           
@@ -668,12 +804,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center bg-blue-50 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-4 sm:mb-6">
-              <span className="text-blue-600 font-semibold text-xs sm:text-sm">📞 HUBUNGI KAMI</span>
+              <span className="text-blue-600 font-semibold text-xs sm:text-sm">📞 HUBUNGI DINAS ESDM</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Informasi Kontak</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Informasi Kontak ESDM</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-              Kami siap melayani dan memberikan informasi terkait program pemberdayaan perempuan, 
-              perlindungan anak, dan keluarga berencana
+              Kami siap melayani dan memberikan informasi terkait energi terbarukan, 
+              pertambangan, dan pengelolaan sumber daya mineral
             </p>
           </motion.div>
           
@@ -682,7 +818,7 @@ export default function Home() {
               {
                 icon: <PhoneIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
                 title: "Telepon",
-                primary: "(0751) 7053781",
+                primary: "(0751) 1234567",
                 secondary: "Senin - Jumat: 08:00 - 16:00",
                 gradient: "from-blue-500 to-blue-600",
                 bg: "from-blue-50 to-blue-100",
@@ -691,7 +827,7 @@ export default function Home() {
               {
                 icon: <EnvelopeIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
                 title: "Email",
-                primary: "dp3ap2kb@sumbarprov.go.id",
+                primary: "esdm@sumbarprov.go.id",
                 secondary: "Respon dalam 1x24 jam",
                 gradient: "from-green-500 to-green-600",
                 bg: "from-green-50 to-green-100",
@@ -700,7 +836,7 @@ export default function Home() {
               {
                 icon: <MapPinIcon className="w-6 h-6 sm:w-8 sm:h-8" />,
                 title: "Alamat",
-                primary: "Jalan Rasuna Said Nomor 74 Padang",
+                primary: "Jalan Jend. Sudirman No. 2, Padang",
                 secondary: "Sumatera Barat, Indonesia",
                 gradient: "from-orange-500 to-orange-600",
                 bg: "from-orange-50 to-orange-100",
@@ -757,9 +893,9 @@ export default function Home() {
                 <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
                   <MapPinIcon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
                 </div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Lokasi Kantor</h3>
-                <p className="text-sm sm:text-base md:text-lg mb-1">Dinas Pemberdayaan Perempuan dan Perlindungan Anak</p>
-                <p className="text-xs sm:text-sm md:text-base opacity-80 mb-4 sm:mb-6">Pengendalian Penduduk dan Keluarga Berencana</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Lokasi Kantor ESDM</h3>
+                <p className="text-sm sm:text-base md:text-lg mb-1">Dinas Energi dan Sumber Daya Mineral</p>
+                <p className="text-xs sm:text-sm md:text-base opacity-80 mb-4 sm:mb-6">Pemerintah Provinsi Sumatera Barat</p>
                 
                 {/* Action Button */}
                 <button className="bg-blue-600 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base">

@@ -46,13 +46,13 @@ export default function KontakPage() {
     {
       icon: PhoneIcon,
       title: "Telepon",
-      content: "(0751) 7051711",
+      content: "(0751) 1234567",
       color: "text-green-600"
     },
     {
       icon: EnvelopeIcon,
       title: "Email",
-      content: "dp3ap2kb@sumbarprov.go.id",
+      content: "esdm@sumbarprov.go.id",
       color: "text-purple-600"
     },
     {
@@ -66,23 +66,28 @@ export default function KontakPage() {
   const departments = [
     {
       name: "Sekretariat",
-      phone: "(0751) 7051711",
-      email: "sekretariat@dp3ap2kb.sumbarprov.go.id"
+      phone: "(0751) 1234567",
+      email: "sekretariat@esdm.sumbarprov.go.id"
     },
     {
-      name: "Bidang Pengendalian Penduduk dan KB",
-      phone: "(0751) 7051712",
-      email: "pp_kb@dp3ap2kb.sumbarprov.go.id"
+      name: "Bidang Energi Terbarukan",
+      phone: "(0751) 1234568",
+      email: "energi@esdm.sumbarprov.go.id"
     },
     {
-      name: "Bidang Pemberdayaan Perempuan",
-      phone: "(0751) 7051713",
-      email: "pp@dp3ap2kb.sumbarprov.go.id"
+      name: "Bidang Pertambangan",
+      phone: "(0751) 1234569",
+      email: "pertambangan@esdm.sumbarprov.go.id"
     },
     {
-      name: "Bidang Perlindungan Anak",
-      phone: "(0751) 7051714",
-      email: "pa@dp3ap2kb.sumbarprov.go.id"
+      name: "Bidang Migas",
+      phone: "(0751) 1234570",
+      email: "migas@esdm.sumbarprov.go.id"
+    },
+    {
+      name: "Bidang Geologi",
+      phone: "(0751) 1234571",
+      email: "geologi@esdm.sumbarprov.go.id"
     }
   ];
 
@@ -99,10 +104,10 @@ export default function KontakPage() {
               className="text-center"
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Hubungi Kami
+                Hubungi Dinas ESDM
               </h1>
               <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                Kami siap membantu dan melayani Anda dengan sepenuh hati
+                Kami siap membantu dan melayani Anda dalam bidang energi dan sumber daya mineral
               </p>
             </motion.div>
           </div>
@@ -225,7 +230,7 @@ export default function KontakPage() {
 
             {/* Contact Details */}
             <div className="space-y-8">
-              {/* Map Placeholder */}
+              {/* Map Section */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -233,11 +238,39 @@ export default function KontakPage() {
                 className="bg-white rounded-xl p-8 shadow-md"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Lokasi Kami</h3>
-                <div className="aspect-video bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <MapPinIcon className="w-16 h-16 mx-auto mb-2" />
-                    <p className="text-lg font-medium">Peta Lokasi</p>
-                    <p className="text-sm opacity-90">Jl. Khatib Sulaiman No. 52, Padang</p>
+                <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6506666666667!2d100.35578841475396!3d-0.9376323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b93a131b4c13%3A0x1b0187a6268f2f45!2sKantor%20Gubernur%20Sumatera%20Barat!5e0!3m2!1sid!2sid!4v1672483200000!5m2!1sid!2sid"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-lg"
+                  ></iframe>
+                </div>
+                <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <MapPinIcon className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-blue-900">Kantor Gubernur Sumatera Barat</p>
+                      <p className="text-blue-700 text-sm mt-1">Jl. Khatib Sulaiman No. 52, Padang, Sumatera Barat 25136</p>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <button 
+                          onClick={() => window.open('https://www.google.com/maps/place/Kantor+Gubernur+Sumatera+Barat/@-0.9376323,100.3557884,17z/data=!4m10!1m2!2m1!1sgubernur!3m6!1s0x2fd4b93a131b4c13:0x1b0187a6268f2f45!8m2!3d-0.9376307!4d100.3603402!15sCghndWJlcm51cpIBEWdvdmVybm1lbnRfb2ZmaWNlqgE_EAEqDCIIZ3ViZXJudXIoJjIfEAEiG5G8peQY87R9mED1tbZv8tLdNo5SZy54NaAerzIMEAIiCGd1YmVybnVy4AEA!16s%2Fg%2F12hk3w218!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D', '_blank')}
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
+                        >
+                          Buka di Google Maps
+                        </button>
+                        <button 
+                          onClick={() => window.open('https://www.google.com/maps/dir//Kantor+Gubernur+Sumatera+Barat,+Jl.+Khatib+Sulaiman+No.52,+Padang,+Sumatera+Barat+25136/@-0.9376323,100.3557884,17z/', '_blank')}
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
+                        >
+                          Petunjuk Arah
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -278,20 +311,20 @@ export default function KontakPage() {
               >
                 <h3 className="text-xl font-bold text-red-900 mb-4">Kontak Darurat</h3>
                 <p className="text-red-700 mb-4">
-                  Untuk kasus darurat yang memerlukan penanganan segera, hubungi:
+                  Untuk kasus darurat lingkungan dan keselamatan pertambangan, hubungi:
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2 text-red-700">
                     <PhoneIcon className="w-5 h-5" />
-                    <span className="font-semibold">+62 813-6372-1234</span>
+                    <span className="font-semibold">+62 813-6372-5678</span>
                   </div>
                   <div className="flex items-center space-x-2 text-red-700">
                     <EnvelopeIcon className="w-5 h-5" />
-                    <span className="font-semibold">darurat@dp3ap2kb.sumbarprov.go.id</span>
+                    <span className="font-semibold">darurat@esdm.sumbarprov.go.id</span>
                   </div>
                 </div>
                 <p className="text-sm text-red-600 mt-4">
-                  * Tersedia 24 jam untuk kasus kekerasan terhadap perempuan dan anak
+                  * Tersedia 24 jam untuk kasus darurat lingkungan dan keselamatan kerja
                 </p>
               </motion.div>
             </div>
