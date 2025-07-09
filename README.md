@@ -42,17 +42,18 @@ Buka http://localhost:3000 di browser.
 
 ## 📁 Struktur Project
 
+```bash
 src/
 ├── app/                    # App Router pages
-│   ├── berita/            # Halaman berita
-│   ├── galeri/            # Halaman galeri
-│   ├── kontak/            # Halaman kontak
-│   ├── layanan/           # Halaman layanan
-│   ├── profil/            # Halaman profil
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Homepage
-├── components/            # Komponen reusable
+│   ├── berita/             # Halaman berita
+│   ├── galeri/             # Halaman galeri
+│   ├── kontak/             # Halaman kontak
+│   ├── layanan/            # Halaman layanan
+│   ├── profil/             # Halaman profil
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Homepage
+├── components/             # Komponen reusable
 │   ├── AnimatedCounter.tsx
 │   ├── Footer.tsx
 │   ├── Layout.tsx
@@ -60,8 +61,9 @@ src/
 │   ├── NewsCard.tsx
 │   ├── ParticlesBackground.tsx
 │   └── TypewriterText.tsx
-└── hooks/                 # Custom hooks
+└── hooks/                  # Custom hooks
     └── useIntersectionObserver.ts
+
 
 ## 🎯 Halaman yang Tersedia
 
