@@ -58,7 +58,7 @@ export default function DropdownMenu({ title, items, className = "" }: DropdownM
             onMouseLeave={() => setIsOpen(false)}
           >
             <div className="p-2">
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

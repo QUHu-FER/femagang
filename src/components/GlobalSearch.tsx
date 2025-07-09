@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { FaSearch, FaTimes, FaNewspaper, FaFileAlt, FaImage, FaVideo, FaGavel } from 'react-icons/fa';
+import { FaSearch, FaTimes, FaNewspaper, FaFileAlt, FaImage, FaGavel } from 'react-icons/fa';
 import { MdOutlineEnergySavingsLeaf } from 'react-icons/md';
 
 interface SearchResult {

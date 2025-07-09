@@ -6,14 +6,14 @@ import { FaFacebook, FaTwitter, FaWhatsapp, FaLinkedin, FaTelegram, FaLink } fro
 interface SocialShareProps {
   url?: string;
   title?: string;
-  description?: string;
+  // description?: string;
   className?: string;
 }
 
 export default function SocialShare({ 
   url = typeof window !== 'undefined' ? window.location.href : '',
   title = "Dinas ESDM Sumatera Barat",
-  description = "Portal resmi Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat",
+  // description = "Portal resmi Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat",
   className = ""
 }: SocialShareProps) {
   const [copied, setCopied] = useState(false);

@@ -21,7 +21,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 }) => {
   const [count, setCount] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
-  const countRef = useRef<number>(0);
+  // const countRef = useRef<number>(0);
   const startTimeRef = useRef<number | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
 

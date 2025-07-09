@@ -136,7 +136,7 @@ export default function VisitorStats({ className = "" }: VisitorStatsProps) {
           </div>
         ) : (
           <div className="space-y-3">
-            {statItems.map((item, index) => (
+            {statItems.map((item) => (
               <div
                 key={item.label}
                 className={`flex items-center justify-between p-4 rounded-lg ${item.bgColor} hover:shadow-md transition-shadow duration-200`}

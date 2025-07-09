@@ -219,7 +219,7 @@ export default function Navbar() {
                       onMouseLeave={handleDropdownMouseLeave}
                     >
                       <div className="p-2">
-                        {menuItems.map((item, index) => (
+                        {menuItems.map((item) => (
                           <Link
                             key={item.name}
                             href={item.href}
@@ -348,12 +348,12 @@ export default function Navbar() {
                           className="overflow-hidden"
                         >
                           <div className="ml-4 mt-2 space-y-1 bg-gray-50 rounded-lg p-2">
-                            {menuItems.map((item, index) => (
+                            {menuItems.map((item) => (
                               <motion.div
                                 key={item.name}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.2, delay: index * 0.05 }}
+                                // transition={{ duration: 0.2, delay: index * 0.05 }}
                               >
                                 <Link
                                   href={item.href}
