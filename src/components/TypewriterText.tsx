@@ -44,7 +44,7 @@ const TypewriterText = ({
       repeat={text ? 0 : Infinity}
       className={className}
       style={{ display: 'inline-block' }}
-      speed={speed as any}
+      speed={typeof speed === 'number' ? speed as any : 50}
     />
   );
 };

@@ -260,7 +260,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             <div className="p-6 text-center">
               <FaSearch className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600 dark:text-gray-400">
-                Tidak ada hasil ditemukan untuk "{searchTerm}"
+                Tidak ada hasil ditemukan untuk &quot;{searchTerm}&quot;
               </p>
             </div>
           ) : (
