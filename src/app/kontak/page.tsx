@@ -1,332 +1,154 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
 import Layout from '@/components/Layout';
-import { 
-  MapPinIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  ClockIcon,
-  UserIcon,
-  ChatBubbleLeftRightIcon
-} from '@heroicons/react/24/outline';
+import ContactForm from '@/components/ContactForm';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebook, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 export default function KontakPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    alert('Pesan Anda telah terkirim! Terima kasih.');
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const contactInfo = [
-    {
-      icon: MapPinIcon,
-      title: "Alamat",
-      content: "Jl. Khatib Sulaiman No. 52, Padang, Sumatera Barat 25136",
-      color: "text-blue-600"
-    },
-    {
-      icon: PhoneIcon,
-      title: "Telepon",
-      content: "(0751) 1234567",
-      color: "text-green-600"
-    },
-    {
-      icon: EnvelopeIcon,
-      title: "Email",
-      content: "esdm@sumbarprov.go.id",
-      color: "text-purple-600"
-    },
-    {
-      icon: ClockIcon,
-      title: "Jam Operasional",
-      content: "Senin - Jumat: 08.00 - 16.00 WIB",
-      color: "text-orange-600"
-    }
-  ];
-
-  const departments = [
-    {
-      name: "Sekretariat",
-      phone: "(0751) 1234567",
-      email: "sekretariat@esdm.sumbarprov.go.id"
-    },
-    {
-      name: "Bidang Energi Terbarukan",
-      phone: "(0751) 1234568",
-      email: "energi@esdm.sumbarprov.go.id"
-    },
-    {
-      name: "Bidang Pertambangan",
-      phone: "(0751) 1234569",
-      email: "pertambangan@esdm.sumbarprov.go.id"
-    },
-    {
-      name: "Bidang Migas",
-      phone: "(0751) 1234570",
-      email: "migas@esdm.sumbarprov.go.id"
-    },
-    {
-      name: "Bidang Geologi",
-      phone: "(0751) 1234571",
-      email: "geologi@esdm.sumbarprov.go.id"
-    }
-  ];
-
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Hubungi Dinas ESDM
-              </h1>
-              <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                Kami siap membantu dan melayani Anda dalam bidang energi dan sumber daya mineral
-              </p>
-            </motion.div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Hero Section */}
+        <section className="relative py-20 bg-gradient-to-r from-blue-900 to-blue-700">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="relative container mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Hubungi Kami
+            </h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Sampaikan pertanyaan, saran, atau keluhan Anda kepada Dinas ESDM Sumatera Barat
+            </p>
           </div>
-        </div>
+        </section>
 
-        {/* Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Contact Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
-              >
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${info.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
-                  <info.icon className={`w-6 h-6 ${info.color}`} />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{info.title}</h3>
-                <p className="text-gray-600 text-sm">{info.content}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Main Content */}
+        <div className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl p-8 shadow-md"
-            >
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <ChatBubbleLeftRightIcon className="w-5 h-5 text-blue-600" />
+            {/* Contact Info */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  Informasi Kontak
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-8">
+                  Kami siap melayani dan memberikan informasi terbaik untuk kebutuhan Anda terkait energi dan sumber daya mineral.
+                </p>
+              </div>
+
+              {/* Contact Details */}
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                    <FaMapMarkerAlt className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      Alamat Kantor
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Jl. Khatib Sulaiman No. 45, Padang Utara, <br />
+                      Kota Padang, Sumatera Barat 25173
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Kirim Pesan</h2>
-                  <p className="text-gray-600">Sampaikan pertanyaan atau saran Anda</p>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                    <FaPhone className="w-6 h-6 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      Telepon & Fax
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Telepon: (0751) 7051234 <br />
+                      Fax: (0751) 7051235
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                    <FaEnvelope className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      Email
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      info@esdm.sumbarprov.go.id <br />
+                      ppid@esdm.sumbarprov.go.id
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+                    <FaClock className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      Jam Operasional
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Senin - Kamis: 08:00 - 16:00 WIB <br />
+                      Jumat: 08:00 - 11:30 WIB <br />
+                      Sabtu & Minggu: Tutup
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nama Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="Masukkan nama lengkap Anda"
-                  />
+              {/* Social Media */}
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+                  Ikuti Media Sosial Kami
+                </h3>
+                <div className="flex gap-4">
+                  <a
+                    href="#"
+                    className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+                    title="Facebook"
+                  >
+                    <FaFacebook className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="#"
+                    className="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center text-white hover:bg-sky-600 transition-colors"
+                    title="Twitter"
+                  >
+                    <FaTwitter className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="#"
+                    className="w-10 h-10 bg-pink-500 rounded-lg flex items-center justify-center text-white hover:bg-pink-600 transition-colors"
+                    title="Instagram"
+                  >
+                    <FaInstagram className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="#"
+                    className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white hover:bg-red-700 transition-colors"
+                    title="YouTube"
+                  >
+                    <FaYoutube className="w-5 h-5" />
+                  </a>
                 </div>
+              </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="Masukkan email Anda"
-                  />
+              {/* Map Placeholder */}
+              <div className="bg-gray-200 dark:bg-gray-700 rounded-xl h-64 flex items-center justify-center">
+                <div className="text-center">
+                  <FaMapMarkerAlt className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Peta Lokasi Kantor ESDM Sumbar
+                  </p>
                 </div>
+              </div>
+            </div>
 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Subjek
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="Subjek pesan"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Pesan
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-                    placeholder="Tulis pesan Anda di sini..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center space-x-2"
-                >
-                  <EnvelopeIcon className="w-5 h-5" />
-                  <span>Kirim Pesan</span>
-                </button>
-              </form>
-            </motion.div>
-
-            {/* Contact Details */}
-            <div className="space-y-8">
-              {/* Map Section */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                className="bg-white rounded-xl p-8 shadow-md"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Lokasi Kami</h3>
-                <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6506666666667!2d100.35578841475396!3d-0.9376323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b93a131b4c13%3A0x1b0187a6268f2f45!2sKantor%20Gubernur%20Sumatera%20Barat!5e0!3m2!1sid!2sid!4v1672483200000!5m2!1sid!2sid"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="rounded-lg"
-                  ></iframe>
-                </div>
-                <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-start space-x-3">
-                    <MapPinIcon className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold text-blue-900">Kantor Gubernur Sumatera Barat</p>
-                      <p className="text-blue-700 text-sm mt-1">Jl. Khatib Sulaiman No. 52, Padang, Sumatera Barat 25136</p>
-                      <div className="flex items-center space-x-4 mt-2">
-                        <button 
-                          onClick={() => window.open('https://www.google.com/maps/place/Kantor+Gubernur+Sumatera+Barat/@-0.9376323,100.3557884,17z/data=!4m10!1m2!2m1!1sgubernur!3m6!1s0x2fd4b93a131b4c13:0x1b0187a6268f2f45!8m2!3d-0.9376307!4d100.3603402!15sCghndWJlcm51cpIBEWdvdmVybm1lbnRfb2ZmaWNlqgE_EAEqDCIIZ3ViZXJudXIoJjIfEAEiG5G8peQY87R9mED1tbZv8tLdNo5SZy54NaAerzIMEAIiCGd1YmVybnVy4AEA!16s%2Fg%2F12hk3w218!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D', '_blank')}
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
-                        >
-                          Buka di Google Maps
-                        </button>
-                        <button 
-                          onClick={() => window.open('https://www.google.com/maps/dir//Kantor+Gubernur+Sumatera+Barat,+Jl.+Khatib+Sulaiman+No.52,+Padang,+Sumatera+Barat+25136/@-0.9376323,100.3557884,17z/', '_blank')}
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium underline"
-                        >
-                          Petunjuk Arah
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Department Contacts */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white rounded-xl p-8 shadow-md"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-6">Kontak Bidang</h3>
-                <div className="space-y-4">
-                  {departments.map((dept, index) => (
-                    <div key={index} className="border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
-                      <h4 className="font-semibold text-gray-900 mb-2">{dept.name}</h4>
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <PhoneIcon className="w-4 h-4" />
-                          <span>{dept.phone}</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <EnvelopeIcon className="w-4 h-4" />
-                          <span>{dept.email}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Emergency Contact */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-red-50 rounded-xl p-8 shadow-md border border-red-200"
-              >
-                <h3 className="text-xl font-bold text-red-900 mb-4">Kontak Darurat</h3>
-                <p className="text-red-700 mb-4">
-                  Untuk kasus darurat lingkungan dan keselamatan pertambangan, hubungi:
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2 text-red-700">
-                    <PhoneIcon className="w-5 h-5" />
-                    <span className="font-semibold">+62 813-6372-5678</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-red-700">
-                    <EnvelopeIcon className="w-5 h-5" />
-                    <span className="font-semibold">darurat@esdm.sumbarprov.go.id</span>
-                  </div>
-                </div>
-                <p className="text-sm text-red-600 mt-4">
-                  * Tersedia 24 jam untuk kasus darurat lingkungan dan keselamatan kerja
-                </p>
-              </motion.div>
+            {/* Contact Form */}
+            <div>
+              <ContactForm />
             </div>
           </div>
         </div>

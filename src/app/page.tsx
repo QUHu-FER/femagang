@@ -18,10 +18,14 @@ import NewsCard from '@/components/NewsCard';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import TypewriterText from '@/components/TypewriterText';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import SocialShare from '@/components/SocialShare';
+import GlobalSearch from '@/components/GlobalSearch';
+import NewsTickerBanner from '@/components/NewsTickerBanner';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const slides = [
     {
@@ -101,14 +105,17 @@ export default function Home() {
   ];
 
   const quickLinks = [
-    { title: "PPID", desc: "Pejabat Pengelola Informasi dan Dokumentasi" },
-    { title: "E-Layanan", desc: "Layanan Digital Terpadu ESDM" },
-    { title: "Pengaduan", desc: "Sistem Pengaduan Masyarakat" },
-    { title: "Download", desc: "Dokumen dan Formulir ESDM" }
+    { title: "Pencarian", desc: "Cari informasi, berita, dan dokumen ESDM", action: () => setSearchOpen(true) },
+    { title: "PPID", desc: "Pejabat Pengelola Informasi dan Dokumentasi", action: () => window.location.href = '/profil#ppid' },
+    { title: "E-Layanan", desc: "Layanan Digital Terpadu ESDM", action: () => window.location.href = '/layanan' },
+    { title: "Download", desc: "Dokumen dan Formulir ESDM", action: () => window.location.href = '/download' }
   ];
 
   return (
     <Layout>
+      {/* News Ticker Banner */}
+      <NewsTickerBanner />
+      
       {/* Hero Section */}
       <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
         {/* Particles Background */}
@@ -157,18 +164,22 @@ export default function Home() {
                         {slide.title}
                       </span>
                       <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight block">
-                        <TypewriterText 
-                          text={slide.subtitle} 
-                          speed={50}
-                          delay={1000}
-                          className="hidden sm:inline"
-                        />
-                        <TypewriterText 
-                          text={slide.subtitle.split(' ').slice(0, 5).join(' ')} 
-                          speed={50}
-                          delay={1000}
-                          className="sm:hidden"
-                        />
+                        {/* Desktop version */}
+                        <span className="hidden sm:block">
+                          <TypewriterText 
+                            text={slide.subtitle} 
+                            speed={50}
+                            delay={1000}
+                          />
+                        </span>
+                        {/* Mobile version - shorter text */}
+                        <span className="block sm:hidden">
+                          <TypewriterText 
+                            text={slide.subtitle.length > 50 ? slide.subtitle.substring(0, 50) + '...' : slide.subtitle} 
+                            speed={50}
+                            delay={1000}
+                          />
+                        </span>
                       </span>
                     </motion.h1>
                     
@@ -402,10 +413,10 @@ export default function Home() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {quickLinks.map((link, index) => (
-              <motion.a
+              <motion.button
                 key={index}
-                href="#"
-                className="group relative bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-blue-200/50 transition-all duration-500 overflow-hidden"
+                onClick={link.action}
+                className="group relative bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-blue-200/50 transition-all duration-500 overflow-hidden text-left"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
@@ -442,7 +453,7 @@ export default function Home() {
                     <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 group-hover:text-blue-600" />
                   </div>
                 </div>
-              </motion.a>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -927,8 +938,27 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
+
+          {/* Social Share */}
+          <motion.div
+            className="text-center mt-8 p-6 bg-gray-50 rounded-xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+          >
+            <SocialShare 
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              title="Dinas ESDM Sumatera Barat - Portal Resmi"
+              description="Portal resmi Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat"
+              className="justify-center"
+            />
+          </motion.div>
         </div>
       </section>
+
+      {/* Global Search Modal */}
+      <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </Layout>
   );
 }

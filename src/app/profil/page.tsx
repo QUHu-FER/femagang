@@ -9,6 +9,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 import Layout from '@/components/Layout';
+import PPIDSection from '@/components/PPIDSection';
 
 export default function ProfilPage() {
   const organizationStructure = [
@@ -269,6 +270,9 @@ export default function ProfilPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* PPID Section */}
+      <PPIDSection />
     </Layout>
   );
 }
