@@ -116,8 +116,11 @@ export default function Home() {
     { title: "Lokasi Penambangan", count: 95, suffix: "+", icon: "💎" },
     { title: "Program Pemberdayaan", count: 150, suffix: "+", icon: "🚀" }
   ];
-  // Panggil hook di level atas
-  const statObservers = stats.map(() => useIntersectionObserver({ threshold: 0.5 }));
+  // Panggil hook satu per satu agar lolos lint Next.js
+  const statObserver0 = useIntersectionObserver({ threshold: 0.5 });
+  const statObserver1 = useIntersectionObserver({ threshold: 0.5 });
+  const statObserver2 = useIntersectionObserver({ threshold: 0.5 });
+  const statObserver3 = useIntersectionObserver({ threshold: 0.5 });
 
   return (
     <Layout>
@@ -316,78 +319,82 @@ export default function Home() {
       <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                ref={statObservers[index].ref}
-                className="relative group"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-              >
-                {/* Glassmorphism Card */}
-                <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden">
-                  {/* Background Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/10 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  {/* Floating Particles */}
-                  <div className="absolute inset-0 overflow-hidden">
-                    <motion.div
-                      className="absolute top-4 right-4 w-2 h-2 bg-blue-400/30 rounded-full"
-                      animate={{
-                        y: [0, -20, 0],
-                        opacity: [0.3, 0.8, 0.3]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                    <motion.div
-                      className="absolute bottom-6 left-6 w-1 h-1 bg-purple-400/40 rounded-full"
-                      animate={{
-                        y: [0, -15, 0],
-                        opacity: [0.4, 0.9, 0.4]
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 1
-                      }}
-                    />
-                  </div>
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className="text-3xl sm:text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                      {stat.icon}
-                    </div>
-                    {/* Counter */}
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
-                      <AnimatedCounter
-                        target={stat.count}
-                        suffix={stat.suffix}
-                        duration={2500}
-                        isVisible={statObservers[index].isIntersecting}
-                      />
-                    </div>
-                    {/* Title */}
-                    <h3 className="text-sm sm:text-base font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                      {stat.title}
-                    </h3>
-                    {/* Progress Bar */}
-                    <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
+            {[0, 1, 2, 3].map((index) => {
+              const stat = stats[index];
+              const observer = [statObserver0, statObserver1, statObserver2, statObserver3][index];
+              return (
+                <motion.div
+                  key={index}
+                  ref={observer.ref}
+                  className="relative group"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                >
+                  {/* Glassmorphism Card */}
+                  <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden">
+                    {/* Background Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/10 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Floating Particles */}
+                    <div className="absolute inset-0 overflow-hidden">
                       <motion.div
-                        className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={statObservers[index].isIntersecting ? { width: "100%" } : { width: 0 }}
-                        transition={{ duration: 1.5, delay: 0.5 }}
+                        className="absolute top-4 right-4 w-2 h-2 bg-blue-400/30 rounded-full"
+                        animate={{
+                          y: [0, -20, 0],
+                          opacity: [0.3, 0.8, 0.3]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <motion.div
+                        className="absolute bottom-6 left-6 w-1 h-1 bg-purple-400/40 rounded-full"
+                        animate={{
+                          y: [0, -15, 0],
+                          opacity: [0.4, 0.9, 0.4]
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1
+                        }}
                       />
                     </div>
+                    <div className="relative z-10">
+                      {/* Icon */}
+                      <div className="text-3xl sm:text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                        {stat.icon}
+                      </div>
+                      {/* Counter */}
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        <AnimatedCounter
+                          target={stat.count}
+                          suffix={stat.suffix}
+                          duration={2500}
+                          isVisible={observer.isIntersecting}
+                        />
+                      </div>
+                      {/* Title */}
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
+                        {stat.title}
+                      </h3>
+                      {/* Progress Bar */}
+                      <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={observer.isIntersecting ? { width: "100%" } : { width: 0 }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
