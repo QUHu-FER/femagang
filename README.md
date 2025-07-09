@@ -63,8 +63,7 @@ src/
 │   └── TypewriterText.tsx
 └── hooks/                  # Custom hooks
     └── useIntersectionObserver.ts
-
-
+```
 ## 🎯 Halaman yang Tersedia
 
 - /           → Beranda
