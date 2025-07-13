@@ -1,158 +1,190 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { PhotoIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 import Layout from '@/components/Layout';
-import PhotoGallery from '@/components/PhotoGallery';
-import VideoGallery from '@/components/VideoGallery';
 
 export default function GaleriPage() {
-  const photos = [
-    {
-      id: 1,
-      src: "https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800",
-      title: "Workshop International Center for Hydropower",
-      description: "Dinas ESDM Sumatera Barat menghadiri workshop pengembangan pembangkit listrik tenaga air",
-      category: "workshop",
-      date: "14 Mei 2024"
-    },
-    {
-      id: 2,
-      src: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800", 
-      title: "Kunjungan ke PLTA Singkarak",
-      description: "Field trip ke PLTA Singkarak bersama FTI Universitas Bung Hatta dan ICH Norwegia",
-      category: "kunjungan",
-      date: "7 Mei 2024"
-    },
-    {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800",
-      title: "Sidak SPBU Kota Padang", 
-      description: "Kepala Dinas ESDM melakukan sidak mendadak ke beberapa SPBU di Kota Padang",
-      category: "pengawasan",
-      date: "28 Desember 2023"
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800",
-      title: "Rapat Kerja Komisi IV DPRD",
-      description: "Kepala Dinas ESDM menghadiri Rapat Kerja dengan Komisi IV DPRD Sumatera Barat",
-      category: "rapat",
-      date: "22 Maret 2022"
-    },
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800",
-      title: "Perjanjian Kerjasama FTI UBH",
-      description: "Penandatanganan perjanjian kerjasama antara FTI Universitas Bung Hatta dengan Dinas ESDM",
-      category: "kerjasama",
-      date: "22 Maret 2022"
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1498049860654-af1a5c566876?w=800",
-      title: "Rapat Pengembangan RUKD",
-      description: "Rapat rencana pengembangan sistem penyediaan tenaga listrik (RUKD)",
-      category: "rapat",
-      date: "22 Maret 2022"
-    },
-    {
-      id: 7,
-      src: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800",
-      title: "Forum Perangkat Daerah",
-      description: "Forum Perangkat Daerah Penyusunan Rencana Kerja Dinas ESDM",
-      category: "forum",
-      date: "22 Maret 2022"
-    },
-    {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
-      title: "Sosialisasi Energi Terbarukan",
-      description: "Sosialisasi program pengembangan energi terbarukan kepada masyarakat",
-      category: "sosialisasi",
-      date: "15 Januari 2024"
-    }
-  ];
-
-  const videos = [
-    {
-      id: 1,
-      title: "Peresmian PLTMH Tanjung Balik Kabupaten Solok",
-      description: "Dokumentasi peresmian Pembangkit Listrik Tenaga Mikrohidro di Kabupaten Solok",
-      thumbnail: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "15:32",
-      views: 2450,
-      date: "27 April 2020",
-      category: "peresmian"
-    },
-    {
-      id: 2,
-      title: "Seminar ESQ Leadership",
-      description: "Seminar pengembangan kepemimpinan untuk pegawai Dinas ESDM Sumatera Barat",
-      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "45:15",
-      views: 1820,
-      date: "28 Desember 2020",
-      category: "seminar"
-    },
-    {
-      id: 3,
-      title: "Penghargaan Subroto 2019",
-      description: "Penerimaan penghargaan Subroto untuk prestasi terbaik Dinas ESDM",
-      thumbnail: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "8:45",
-      views: 3200,
-      date: "16 April 2020",
-      category: "penghargaan"
-    },
-    {
-      id: 4,
-      title: "Peresmian Listrik Desa 2020",
-      description: "Program listrik masuk desa untuk meningkatkan akses energi di daerah terpencil",
-      thumbnail: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "22:18",
-      views: 4100,
-      date: "30 April 2020",
-      category: "peresmian"
-    },
-    {
-      id: 5,
-      title: "Workshop Energi Terbarukan",
-      description: "Workshop pengembangan energi terbarukan untuk masa depan berkelanjutan",
-      thumbnail: "https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "1:12:30",
-      views: 2890,
-      date: "12 Juni 2024",
-      category: "workshop"
-    },
-    {
-      id: 6,
-      title: "Monitoring Tambang Berkelanjutan",
-      description: "Kegiatan monitoring dan evaluasi tambang ramah lingkungan di Sumatera Barat",
-      thumbnail: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=800",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      duration: "35:42",
-      views: 1650,
-      date: "8 Maret 2024",
-      category: "monitoring"
-    }
-  ];
-
   return (
     <Layout>
-      <PhotoGallery 
-        photos={photos} 
-        title="Galeri Foto Dokumentasi"
-        showCategories={true}
-      />
-      <VideoGallery 
-        videos={videos} 
-        title="Galeri Video Dokumentasi"
-        showCategories={true}
-      />
+      {/* Hero Section */}
+      <section className="relative py-20 bg-gradient-to-r from-blue-900 to-blue-700">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Galeri Dokumentasi
+          </motion.h1>
+          <motion.p 
+            className="text-xl text-blue-100 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Dokumentasi kegiatan dan program Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Gallery Options */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Photo Gallery */}
+            <motion.div
+              className="group bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border border-blue-200 hover:shadow-xl transition-all cursor-pointer"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              onClick={() => window.location.href = '/galeri/foto'}
+            >
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mr-6 group-hover:bg-blue-700 transition-colors">
+                  <PhotoIcon className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Galeri Foto</h3>
+                  <p className="text-blue-600 font-semibold">Dokumentasi kegiatan dalam foto</p>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Kumpulan foto dokumentasi kegiatan, program, dan acara yang dilaksanakan oleh 
+                Dinas ESDM Provinsi Sumatera Barat. Temukan momen-momen penting dalam perjalanan 
+                kami melayani masyarakat di bidang energi dan sumber daya mineral.
+              </p>
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500">
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">100+ Foto</span>
+                </div>
+                <div className="text-blue-600 font-semibold group-hover:text-blue-700 transition-colors">
+                  Lihat Foto →
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Video Gallery */}
+            <motion.div
+              className="group bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-xl transition-all cursor-pointer"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              onClick={() => window.location.href = '/galeri/video'}
+            >
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-green-600 rounded-xl flex items-center justify-center mr-6 group-hover:bg-green-700 transition-colors">
+                  <VideoCameraIcon className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Galeri Video</h3>
+                  <p className="text-green-600 font-semibold">Dokumentasi kegiatan dalam video</p>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Koleksi video dokumentasi kegiatan, seminar, workshop, dan program unggulan 
+                Dinas ESDM Provinsi Sumatera Barat. Saksikan secara langsung berbagai inisiatif 
+                dan pencapaian kami dalam membangun sektor energi dan pertambangan.
+              </p>
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500">
+                  <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">50+ Video</span>
+                </div>
+                <div className="text-green-600 font-semibold group-hover:text-green-700 transition-colors">
+                  Tonton Video →
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Highlights */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sorotan Terbaru</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Dokumentasi kegiatan dan program terbaru dari Dinas ESDM Provinsi Sumatera Barat
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div
+              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800" 
+                alt="Workshop Energi Terbarukan"
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Workshop</span>
+                <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">
+                  Workshop Energi Terbarukan 2024
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Workshop pengembangan energi terbarukan untuk masa depan berkelanjutan
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800" 
+                alt="Kunjungan PLTA"
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Kunjungan</span>
+                <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">
+                  Kunjungan ke PLTA Singkarak
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Field trip ke PLTA Singkarak bersama FTI Universitas Bung Hatta
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800" 
+                alt="Perjanjian Kerjasama"
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Kerjasama</span>
+                <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">
+                  Perjanjian Kerjasama FTI UBH
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Penandatanganan perjanjian kerjasama strategis dengan universitas
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }

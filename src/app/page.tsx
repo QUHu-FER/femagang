@@ -15,11 +15,9 @@ import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import TypewriterText from '@/components/TypewriterText';
-import AnimatedCounter from '@/components/AnimatedCounter';
 import SocialShare from '@/components/SocialShare';
 import GlobalSearch from '@/components/GlobalSearch';
 import NewsTickerBanner from '@/components/NewsTickerBanner';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -64,7 +62,8 @@ export default function Home() {
       date: "13 Juni 2025",
       category: "Energi",
       views: 380,
-      excerpt: "Rencana strategis pengembangan energi terbarukan di Sumatera Barat yang mencakup solar, hidro, dan geothermal untuk mencapai target net zero emission 2060."
+      excerpt: "Rencana strategis pengembangan energi terbarukan di Sumatera Barat yang mencakup solar, hidro, dan geothermal untuk mencapai target net zero emission 2060.",
+      thumbnail: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800"
     },
     {
       id: 2,
@@ -72,7 +71,8 @@ export default function Home() {
       date: "13 Juni 2025",
       category: "Program",
       views: 351,
-      excerpt: "Komitmen kinerja dalam pengelolaan energi dan sumber daya mineral dengan fokus pada keberlanjutan dan kesejahteraan masyarakat."
+      excerpt: "Komitmen kinerja dalam pengelolaan energi dan sumber daya mineral dengan fokus pada keberlanjutan dan kesejahteraan masyarakat.",
+      thumbnail: "https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800"
     },
     {
       id: 3,
@@ -80,7 +80,17 @@ export default function Home() {
       date: "13 Juni 2025",
       category: "Pertambangan",
       views: 348,
-      excerpt: "Strategi pengelolaan pertambangan yang memperhatikan aspek lingkungan dan pemberdayaan masyarakat sekitar area tambang."
+      excerpt: "Strategi pengelolaan pertambangan yang memperhatikan aspek lingkungan dan pemberdayaan masyarakat sekitar area tambang.",
+      thumbnail: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=800"
+    },
+    {
+      id: 4,
+      title: "Sosialisasi Keselamatan Pertambangan Mineral dan Batubara",
+      date: "12 Juni 2025",
+      category: "Sosialisasi",
+      views: 290,
+      excerpt: "Kegiatan sosialisasi untuk meningkatkan pemahaman dan penerapan keselamatan kerja di sektor pertambangan mineral dan batubara.",
+      thumbnail: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800"
     }
   ];
 
@@ -108,19 +118,6 @@ export default function Home() {
     { title: "E-Layanan", desc: "Layanan Digital Terpadu ESDM", action: () => window.location.href = '/layanan' },
     { title: "Download", desc: "Dokumen dan Formulir ESDM", action: () => window.location.href = '/download' }
   ];
-
-  // Stats data
-  const stats = [
-    { title: "Izin Usaha Pertambangan", count: 125, suffix: "+", icon: "⚡" },
-    { title: "Sumber Energi Terbarukan", count: 85, suffix: "+", icon: "🌱" },
-    { title: "Lokasi Penambangan", count: 95, suffix: "+", icon: "💎" },
-    { title: "Program Pemberdayaan", count: 150, suffix: "+", icon: "🚀" }
-  ];
-  // Panggil hook satu per satu agar lolos lint Next.js
-  const statObserver0 = useIntersectionObserver({ threshold: 0.5 });
-  const statObserver1 = useIntersectionObserver({ threshold: 0.5 });
-  const statObserver2 = useIntersectionObserver({ threshold: 0.5 });
-  const statObserver3 = useIntersectionObserver({ threshold: 0.5 });
 
   return (
     <Layout>
@@ -157,11 +154,18 @@ export default function Home() {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.3, duration: 0.8 }}
                     >
-                      <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 sm:px-6 sm:py-3 mb-3 sm:mb-6">
-                        <div className="w-5 h-5 sm:w-8 sm:h-8 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-2 sm:mr-3">
-                          <span className="text-white font-bold text-xs sm:text-sm">🏛️</span>
+                      <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 sm:px-8 sm:py-4 mb-3 sm:mb-6">
+                        <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 overflow-hidden">
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
+                            alt="Logo Sumatera Barat"
+                            className="w-full h-full object-contain"
+                          />
                         </div>
-                        <span className="text-white font-medium text-xs sm:text-sm">PEMERINTAH SUMATERA BARAT</span>
+                        <div className="text-left">
+                          <div className="text-white font-bold text-sm sm:text-lg">DINAS ESDM</div>
+                          <div className="text-blue-200 font-medium text-xs sm:text-sm opacity-90">Provinsi Sumatera Barat</div>
+                        </div>
                       </div>
                     </motion.div>
                     
@@ -315,86 +319,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Floating Stats Cards - Glassmorphism Effect */}
+      {/* Floating News Cards - Berita Terkini dengan Thumbnail */}
       <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {[0, 1, 2, 3].map((index) => {
-              const stat = stats[index];
-              const observer = [statObserver0, statObserver1, statObserver2, statObserver3][index];
-              return (
-                <motion.div
-                  key={index}
-                  ref={observer.ref}
-                  className="relative group"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.6 }}
-                >
-                  {/* Glassmorphism Card */}
-                  <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden">
-                    {/* Background Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white/10 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    {/* Floating Particles */}
-                    <div className="absolute inset-0 overflow-hidden">
-                      <motion.div
-                        className="absolute top-4 right-4 w-2 h-2 bg-blue-400/30 rounded-full"
-                        animate={{
-                          y: [0, -20, 0],
-                          opacity: [0.3, 0.8, 0.3]
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <motion.div
-                        className="absolute bottom-6 left-6 w-1 h-1 bg-purple-400/40 rounded-full"
-                        animate={{
-                          y: [0, -15, 0],
-                          opacity: [0.4, 0.9, 0.4]
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1
-                        }}
-                      />
+            {news.map((item, index) => (
+              <motion.div
+                key={item.id}
+                className="relative group"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+              >
+                {/* Glassmorphism Card */}
+                <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden flex flex-col h-full">
+                  {/* Thumbnail */}
+                  <div className="h-32 sm:h-36 w-full bg-gradient-to-br from-blue-100 via-white/30 to-purple-100 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={item.thumbnail}
+                      alt={item.title}
+                      className="object-contain h-full w-full transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex-1 flex flex-col p-6 sm:p-8">
+                    {/* Kategori & Tanggal */}
+                    <div className="flex items-center mb-2">
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                        {item.category}
+                      </span>
+                      <span className="text-gray-500 text-xs ml-3">{item.date}</span>
                     </div>
-                    <div className="relative z-10">
-                      {/* Icon */}
-                      <div className="text-3xl sm:text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                        {stat.icon}
-                      </div>
-                      {/* Counter */}
-                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
-                        <AnimatedCounter
-                          target={stat.count}
-                          suffix={stat.suffix}
-                          duration={2500}
-                          isVisible={observer.isIntersecting}
-                        />
-                      </div>
-                      {/* Title */}
-                      <h3 className="text-sm sm:text-base font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                        {stat.title}
-                      </h3>
-                      {/* Progress Bar */}
-                      <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={observer.isIntersecting ? { width: "100%" } : { width: 0 }}
-                          transition={{ duration: 1.5, delay: 0.5 }}
-                        />
-                      </div>
+                    {/* Judul */}
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
+                      {item.title}
+                    </h3>
+                    {/* Excerpt */}
+                    <p className="text-gray-600 mb-4 line-clamp-3 text-xs sm:text-sm flex-1">{item.excerpt}</p>
+                    {/* Footer */}
+                    <div className="flex items-center justify-between mt-auto pt-2">
+                      <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-xs sm:text-sm">
+                        Baca Selengkapnya
+                        <ChevronRightIcon className="w-4 h-4 ml-1" />
+                      </button>
+                      <span className="text-gray-500 text-xs flex items-center">
+                        👁️ {item.views}
+                      </span>
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -564,16 +539,12 @@ export default function Home() {
             >
               {/* Main Featured News */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="h-40 sm:h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="relative z-10 text-center text-white">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-4">
-                      <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
-                      </svg>
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium">Berita Utama</span>
-                  </div>
+                <div className="h-40 sm:h-48 overflow-hidden">
+                  <img 
+                    src={news[0].thumbnail}
+                    alt={news[0].title}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div className="p-4 sm:p-6">
                   <div className="flex items-center mb-3">
@@ -610,16 +581,12 @@ export default function Home() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <div className="flex">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
-                          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-                            <polyline points="14,2 14,8 20,8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <polyline points="10,9 9,9 8,9"/>
-                          </svg>
-                        </div>
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 overflow-hidden flex-shrink-0">
+                        <img
+                          src={item.thumbnail}
+                          alt={item.title}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
                       </div>
                       <div className="p-3 sm:p-4 flex-1">
                         <div className="flex items-center mb-2">
@@ -664,16 +631,12 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <div className="h-40 sm:h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="relative z-10 text-center text-white">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
-                      </svg>
-                    </div>
-                    <span className="text-xs font-medium opacity-90">Berita #{index + 1}</span>
-                  </div>
+                <div className="h-40 sm:h-48 overflow-hidden">
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div className="p-4 sm:p-6">
                   <div className="flex items-center mb-3">
