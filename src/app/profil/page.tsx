@@ -13,42 +13,31 @@ export default function ProfilPage() {
   const organizationStructure = [
     {
       title: "Kepala Dinas",
-      name: "Dr. H. Ahmad Syafii, M.Si",
+      name: "Ir. H. Joni Arman, M.T",
       description: "Memimpin dan mengkoordinasikan seluruh kegiatan dinas"
     },
     {
       title: "Sekretaris Dinas",
-      name: "Drs. Budi Santoso, M.AP",
+      name: "Drs. H. Ramlan Nurmatias, M.Si",
       description: "Mengkoordinasikan administrasi dan keuangan"
     },
     {
-      title: "Bidang Pemberdayaan Perempuan",
-      name: "Dr. Siti Aminah, M.Si",
-      description: "Mengelola program pemberdayaan perempuan"
+      title: "Bidang Energi",
+      name: "Dr. Ir. Syamsul Bahri, M.T",
+      description: "Mengelola program pengembangan energi"
     },
     {
-      title: "Bidang Perlindungan Anak",
-      name: "Dra. Ratna Sari, M.Psi",
-      description: "Mengelola program perlindungan anak"
+      title: "Bidang Sumber Daya Mineral",
+      name: "Ir. Hj. Ratna Dewi, M.T",
+      description: "Mengelola program sumber daya mineral dan pertambangan"
     }
   ];
 
-  const visiMisi = {
-    visi: "Terwujudnya kesetaraan dan keadilan gender serta perlindungan anak yang optimal dalam mewujudkan keluarga berkualitas di Sumatera Barat",
-    misi: [
-      "Meningkatkan kualitas hidup dan peran perempuan di berbagai bidang pembangunan",
-      "Meningkatkan upaya perlindungan anak dari segala bentuk kekerasan dan diskriminasi", 
-      "Mewujudkan keluarga berkualitas melalui program Keluarga Berencana yang berkelanjutan",
-      "Menguatkan kelembagaan dan jaringan dalam pemberdayaan perempuan dan perlindungan anak",
-      "Meningkatkan pengendalian penduduk dan penyediaan data kependudukan yang akurat"
-    ]
-  };
-
   const tugasPokok = [
-    "Perumusan kebijakan teknis di bidang pemberdayaan perempuan dan perlindungan anak",
-    "Penyelenggaraan urusan pemerintahan dan pelayanan umum di bidang pengendalian penduduk dan KB",
-    "Pembinaan dan pelaksanaan tugas di bidang pemberdayaan perempuan, perlindungan anak, pengendalian penduduk dan KB",
-    "Pelaksanaan evaluasi dan pelaporan di bidang pemberdayaan perempuan, perlindungan anak, pengendalian penduduk dan KB"
+    "Perumusan kebijakan teknis di bidang energi dan sumber daya mineral",
+    "Penyelenggaraan urusan pemerintahan dan pelayanan umum di bidang energi dan sumber daya mineral",
+    "Pembinaan dan pelaksanaan tugas di bidang energi dan sumber daya mineral",
+    "Pelaksanaan evaluasi dan pelaporan di bidang energi dan sumber daya mineral"
   ];
 
   return (
@@ -63,7 +52,7 @@ export default function ProfilPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Profil DP3AP2KB
+            Profil Dinas ESDM
           </motion.h1>
           <motion.p 
             className="text-xl text-blue-100 max-w-3xl mx-auto"
@@ -71,60 +60,68 @@ export default function ProfilPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Dinas Pemberdayaan Perempuan dan Perlindungan Anak, Pengendalian Penduduk dan Keluarga Berencana Provinsi Sumatera Barat
+            Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat
           </motion.p>
         </div>
       </section>
 
-      {/* Visi Misi Section */}
+      {/* Quick Links Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Visi */}
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Informasi Profil</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Pelajari lebih lanjut tentang visi, misi, dan profil lengkap Dinas ESDM Provinsi Sumatera Barat
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
+              className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border border-blue-200 hover:shadow-lg transition-all group cursor-pointer"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl"
+              onClick={() => window.location.href = '/profil/visi-misi'}
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-700 transition-colors">
                   <AcademicCapIcon className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Visi</h2>
+                <h3 className="text-2xl font-bold text-gray-900">Visi & Misi</h3>
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg">{visiMisi.visi}</p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Visi dan misi Dinas Energi dan Sumber Daya Mineral dalam mewujudkan 
+                pembangunan berkelanjutan di Sumatera Barat.
+              </p>
+              <div className="text-blue-600 font-semibold group-hover:text-blue-700 transition-colors">
+                Selengkapnya →
+              </div>
             </motion.div>
 
-            {/* Misi */}
             <motion.div
+              className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl border border-green-200 hover:shadow-lg transition-all group cursor-pointer"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl"
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-green-700 transition-colors">
                   <DocumentTextIcon className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Misi</h2>
+                <h3 className="text-2xl font-bold text-gray-900">Struktur Organisasi</h3>
               </div>
-              <ul className="space-y-4">
-                {visiMisi.misi.map((item, index) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-start"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                  >
-                    <span className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-0.5">
-                      {index + 1}
-                    </span>
-                    <span className="text-gray-700">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Susunan pimpinan dan struktur organisasi lengkap Dinas ESDM 
+                Provinsi Sumatera Barat.
+              </p>
+              <div className="text-green-600 font-semibold group-hover:text-green-700 transition-colors">
+                Lihat Struktur →
+              </div>
             </motion.div>
           </div>
         </div>
