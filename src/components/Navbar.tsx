@@ -30,7 +30,7 @@ export default function Navbar() {
 
   const dropdownMenus: Record<string, MenuItem[]> = {
     'Profil': [
-      { name: 'Struktur Organisasi', href: '/profil/struktur', description: 'Bagan organisasi Dinas ESDM' },
+      { name: 'Struktur Organisasi', href: '/profil/struktur-organisasi', description: 'Bagan organisasi Dinas ESDM' },
       { name: 'Visi dan Misi', href: '/profil/visi-misi', description: 'Visi, misi, dan tujuan dinas' },
       { name: 'Sejarah Singkat', href: '/profil/sejarah', description: 'Sejarah pembentukan dinas' },
       { name: 'Tugas dan Fungsi', href: '/profil/tugas-fungsi', description: 'Tupoksi dinas ESDM' },
