@@ -14,7 +14,7 @@ import Image from 'next/image';
 export default function StrukturOrganisasiPage() {
   const pimpinan = [
     {
-      nama: "Ir. Herry Martiana, M.M.",
+      nama: "Ir. Herry Martiana, M.M.M",
       jabatan: "Kepala Dinas",
       foto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
       email: "kepala.dinas@esdm.sumbarprov.go.id",
@@ -109,7 +109,7 @@ export default function StrukturOrganisasiPage() {
             <div className="p-8">
               <div className="relative">
                 <Image
-                  src="/image/STRUKTUR.jpg"
+                  src="/image/struktur-organisasi.jpg"
                   alt="Struktur Organisasi Dinas ESDM Sumatera Barat"
                   width={1200}
                   height={800}
