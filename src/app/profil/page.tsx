@@ -108,6 +108,7 @@ export default function ProfilPage() {
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              onClick={() => window.location.href = '/profil/struktur-organisasi'}
             >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4 group-hover:bg-green-700 transition-colors">
