@@ -35,6 +35,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <script 
+          src="https://cdn.userway.org/widget.js" 
+          data-account="aLsAun4U5c"
+          data-position="5"
+          data-size="medium"
+          data-color="#2563eb"
+          async
+        ></script> 
       </body>
     </html>
   );

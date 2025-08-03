@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
+import AnimatedCounter from '@/components/AnimatedCounter';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import TypewriterText from '@/components/TypewriterText';
 import SocialShare from '@/components/SocialShare';
@@ -392,41 +393,32 @@ export default function Home() {
               <motion.button
                 key={index}
                 onClick={link.action}
-                className="group relative bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-blue-200/50 transition-all duration-500 overflow-hidden text-left"
+                className="group relative bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-blue-200/50 transition-all duration-500 overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-blue-400"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.02, y: -5 }}
+                whileHover={{ scale: 1.04, y: -6 }}
               >
-                {/* Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white/20 to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+                {/* Animated Gradient Border */}
+                <div className="absolute inset-0 pointer-events-none rounded-xl sm:rounded-2xl group-hover:ring-2 group-hover:ring-blue-300 transition-all duration-300" />
                 {/* Floating Elements */}
-                <div className="absolute inset-0 overflow-hidden">
-                  <motion.div
-                    className="absolute top-2 right-2 w-1 h-1 bg-blue-400/40 rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.4, 0.8, 0.4]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                </div>
-                
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-100 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-all duration-500" />
+                <div className="absolute -bottom-2 -left-2 w-8 h-8 bg-purple-100 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-all duration-500" />
                 <div className="relative z-10">
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white font-bold text-sm sm:text-lg">{link.title.slice(0, 2)}</span>
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white font-bold text-lg sm:text-xl drop-shadow-md tracking-wide">
+                      {link.title.split(' ').length > 1 ? link.title.split(' ').map(w => w[0]).join('') : link.title.slice(0,2)}
+                    </span>
                   </div>
-                  <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors">{link.title}</h3>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{link.desc}</p>
-                  
+                  <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors">
+                    {link.title}
+                  </h3>
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-2 min-h-[36px]">
+                    {link.desc}
+                  </p>
                   {/* Arrow Icon */}
-                  <div className="absolute top-3 sm:top-6 right-3 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 bg-gray-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-blue-100 transition-all duration-300">
-                    <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 group-hover:text-blue-600" />
+                  <div className="absolute top-3 sm:top-6 right-3 sm:right-6 w-7 h-7 sm:w-8 sm:h-8 bg-blue-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-blue-100 transition-all duration-300 shadow group-hover:shadow-md">
+                    <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 group-hover:text-blue-700" />
                   </div>
                 </div>
               </motion.button>
@@ -705,52 +697,68 @@ export default function Home() {
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            {[
-              { number: "55", label: "Online", progress: 75, icon: "🟢" },
-              { number: "9,144", label: "Kemarin", progress: 85, icon: "📅" },
-              { number: "1,385", label: "Hari Ini", progress: 65, icon: "📈" },
-              { number: "3,707,161", label: "Total Visitor", progress: 100, icon: "👥" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="group relative bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all duration-500"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-              >
-                {/* Icon */}
-                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {stat.icon}
-                </div>
-                
-                {/* Number */}
-                <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors duration-300">
-                  {stat.number}
-                </div>
-                
-                {/* Label */}
-                <div className="text-blue-200 text-sm sm:text-base lg:text-lg font-medium mb-3 sm:mb-4">
-                  {stat.label}
-                </div>
-                
-                {/* Progress Bar */}
-                <div className="w-full bg-white/20 rounded-full h-2 sm:h-3 overflow-hidden">
-                  <motion.div 
-                    className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 sm:h-3 rounded-full shadow-lg"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${stat.progress}%` }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 1.5, delay: 0.5 + index * 0.2, ease: "easeOut" }}
-                  />
-                </div>
-                
-                {/* Decorative Elements */}
-                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 bg-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </motion.div>
-            ))}
+          {/* Redesigned Visitor Stats */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6 md:gap-8 w-full max-w-2xl mx-auto">
+            {/* Online */}
+            <motion.div
+              className="relative flex flex-col items-center bg-gradient-to-br from-green-400/20 to-green-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-green-400/30 hover:scale-105 transition-transform duration-400"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0 }}
+            >
+              <span className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full px-2 py-1 text-xs shadow">Online</span>
+              <span className="text-3xl mb-2 animate-pulse">🟢</span>
+              <span className="text-2xl font-bold text-green-200 mb-1">
+                <AnimatedCounter target={55} duration={1800} />
+              </span>
+              <span className="text-xs text-green-100 tracking-wide">Pengunjung</span>
+            </motion.div>
+            {/* Hari Ini */}
+            <motion.div
+              className="relative flex flex-col items-center bg-gradient-to-br from-blue-400/20 to-blue-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-blue-400/30 hover:scale-105 transition-transform duration-400"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <span className="absolute -top-3 -right-3 bg-blue-500 text-white rounded-full px-2 py-1 text-xs shadow">Hari Ini</span>
+              <span className="text-3xl mb-2 animate-bounce">📈</span>
+              <span className="text-2xl font-bold text-blue-200 mb-1">
+                <AnimatedCounter target={1385} duration={1800} />
+              </span>
+              <span className="text-xs text-blue-100 tracking-wide">Kunjungan</span>
+            </motion.div>
+            {/* Kemarin */}
+            <motion.div
+              className="relative flex flex-col items-center bg-gradient-to-br from-purple-400/20 to-purple-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-purple-400/30 hover:scale-105 transition-transform duration-400"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="absolute -top-3 -right-3 bg-purple-500 text-white rounded-full px-2 py-1 text-xs shadow">Kemarin</span>
+              <span className="text-3xl mb-2 animate-bounce">📅</span>
+              <span className="text-2xl font-bold text-purple-200 mb-1">
+                <AnimatedCounter target={9144} duration={1800} />
+              </span>
+              <span className="text-xs text-purple-100 tracking-wide">Kunjungan</span>
+            </motion.div>
+            {/* Total Visitor */}
+            <motion.div
+              className="relative flex flex-col items-center bg-gradient-to-br from-yellow-400/20 to-yellow-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-yellow-400/30 hover:scale-105 transition-transform duration-400"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <span className="absolute -top-3 -right-3 bg-yellow-500 text-white rounded-full px-2 py-1 text-xs shadow">Total</span>
+              <span className="text-3xl mb-2 animate-spin-slow">👥</span>
+              <span className="text-2xl font-bold text-yellow-100 mb-1">
+                <AnimatedCounter target={3707161} duration={2200} />
+              </span>
+              <span className="text-xs text-yellow-100 tracking-wide">Visitor</span>
+            </motion.div>
           </div>
           
           {/* Additional Info */}
@@ -831,7 +839,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 {/* Icon */}
-                <div className={`relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br ${contact.gradient} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                <div className={`relative z-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br ${contact.gradient} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                   {contact.icon}
                 </div>
                 
