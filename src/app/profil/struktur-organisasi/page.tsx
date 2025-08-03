@@ -2,9 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { 
-  UserGroupIcon, 
   BuildingOfficeIcon,
-  DocumentTextIcon,
   PhoneIcon,
   EnvelopeIcon
 } from '@heroicons/react/24/outline';

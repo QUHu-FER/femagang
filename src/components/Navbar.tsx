@@ -37,9 +37,9 @@ export default function Navbar() {
     ],
     'Data dan Informasi': [
       { name: 'Berita Utama', href: '/berita', description: 'Berita dan informasi terkini' },
-      { name: 'Siaran Pers', href: '/berita/siaran-pers', description: 'Press release resmi' },
-      { name: 'Pengumuman', href: '/berita/pengumuman', description: 'Pengumuman resmi dinas' },
-      { name: 'Kegiatan Dinas', href: '/berita/kegiatan', description: 'Dokumentasi kegiatan' },
+      { name: 'Siaran Pers', href: '/data-informasi/siaran-pers', description: 'Press release resmi' },
+      { name: 'Pengumuman', href: '/data-informasi/pengumuman', description: 'Pengumuman resmi dinas' },
+      { name: 'Kegiatan Dinas', href: '/data-informasi/kegiatan-dinas', description: 'Dokumentasi kegiatan' },
     ],
     'Media Data': [
       { name: 'Galeri Foto', href: '/galeri/foto', description: 'Dokumentasi foto kegiatan' },
