@@ -1,8 +1,8 @@
-# 🏛️ Website Dinas ESDM Sumatera Barat
+# 🏛️ Website Dinas ESDM Sumatera Barat - UPDATED Sept 2025
 
 Website resmi Dinas Energi dan Sumber Daya Mineral (ESDM) Provinsi Sumatera Barat yang dibangun dengan teknologi modern Next.js dan Tailwind CSS.
 
-## ⚡ Fitur Utama
+## ⚡ Fitur Utama (Updated)
 
 - Modern & Responsif — Desain elegan dan mobile-friendly
 - Interactive Hero Section — Slider otomatis dengan efek particles dan animasi typing
