@@ -1,5 +1,6 @@
 'use client';
 
+// Component untuk menampilkan berita dengan kategori dan filtering
 import { useState } from 'react';
 import { FaCalendarAlt, FaTag, FaEye, FaArrowRight } from 'react-icons/fa';
 import { MdOutlineEnergySavingsLeaf } from 'react-icons/md';
