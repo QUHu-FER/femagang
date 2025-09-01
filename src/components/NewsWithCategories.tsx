@@ -52,7 +52,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-20',
       author: 'Tim ESDM Sumbar',
       views: 1250,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&auto=format&fit=crop&q=60',
       tags: ['Solar Panel', 'Geothermal', 'Biomassa'],
       featured: true
     },
@@ -64,7 +64,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-18',
       author: 'Humas ESDM',
       views: 890,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format&fit=crop&q=60',
       tags: ['Izin Tambang', 'Regulasi', 'Investasi'],
       featured: false
     },
@@ -76,7 +76,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-15',
       author: 'Bidang Energi',
       views: 650,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1427751840561-9852520f8ce8?w=800&auto=format&fit=crop&q=60',
       tags: ['Sosialisasi', 'Lingkungan'],
       featured: false
     },
@@ -88,7 +88,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-12',
       author: 'Bidang Energi',
       views: 1120,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&auto=format&fit=crop&q=60',
       tags: ['Solar Panel', 'Teknologi'],
       featured: true
     },
@@ -100,7 +100,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-10',
       author: 'Bagian Pengadaan',
       views: 445,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60',
       tags: ['Regulasi'],
       featured: false
     },
@@ -112,7 +112,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       date: '2024-01-08',
       author: 'Tim Penelitian',
       views: 980,
-      thumbnail: '/api/placeholder/400/250',
+      thumbnail: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&auto=format&fit=crop&q=60',
       tags: ['Geothermal', 'Teknologi'],
       featured: false
     }
