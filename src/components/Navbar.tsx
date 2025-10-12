@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { 
   Bars3Icon,
   XMarkIcon,
@@ -160,11 +161,14 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group min-w-0 flex-shrink-0">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden border border-gray-200">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
-                alt="Logo Sumatera Barat"
-                className="w-full h-full object-contain p-1"
-              />
+              <div className="relative w-full h-full p-1">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
+                  alt="Logo Sumatera Barat"
+                  className="object-contain"
+                  fill
+                />
+              </div>
             </div>
             <div className="min-w-0">
               <h1 className="text-lg xl:text-xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors whitespace-nowrap">

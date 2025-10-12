@@ -4,7 +4,8 @@ import Layout from '@/components/Layout';
 import PhotoGallery from '@/components/PhotoGallery';
 
 export default function FotoPage() {
-  const photos = [
+  // Base photos data
+  const basePhotos = [
     {
       id: 1,
       src: "https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800",
@@ -103,10 +104,30 @@ export default function FotoPage() {
     }
   ];
 
+  // Generate more photos for pagination
+  const generateMorePhotos = () => {
+    const allPhotos = [...basePhotos];
+    for (let i = 1; i <= 2; i++) {
+      basePhotos.forEach((photo) => {
+        allPhotos.push({
+          ...photo,
+          id: photo.id + basePhotos.length * i,
+          title: `${photo.title} - Set ${i + 1}`,
+          date: new Date(new Date(photo.date).getTime() + i * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+        });
+      });
+    }
+    return allPhotos;
+  };
+
   return (
     <Layout>
       <PhotoGallery 
-        photos={photos} 
+        photos={generateMorePhotos()} 
         title="Galeri Foto Dokumentasi"
         showCategories={true}
       />

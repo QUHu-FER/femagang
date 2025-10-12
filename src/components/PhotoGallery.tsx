@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 interface Photo {
@@ -23,14 +24,28 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Show 12 photos per page
 
   // Get unique categories
   const categories = ['all', ...Array.from(new Set(photos.map(photo => photo.category)))];
+
+  // Handle category change
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1); // Reset to first page when changing category
+  };
 
   // Filter photos by category
   const filteredPhotos = selectedCategory === 'all' 
     ? photos 
     : photos.filter(photo => photo.category === selectedCategory);
+    
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPhotos.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedPhotos = filteredPhotos.slice(startIndex, endIndex);
 
   const openLightbox = (photo: Photo, index: number) => {
     setSelectedPhoto(photo);
@@ -85,7 +100,7 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => handleCategoryChange(category)}
                 className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full font-medium transition-all duration-300 text-sm sm:text-base ${
                   selectedCategory === category
                     ? 'bg-blue-600 text-white shadow-lg transform scale-105'
@@ -98,9 +113,16 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
           </motion.div>
         )}
 
+        {/* Results Info */}
+        <div className="text-center mb-6">
+          <p className="text-gray-600">
+            Menampilkan {startIndex + 1}-{Math.min(endIndex, filteredPhotos.length)} dari {filteredPhotos.length} foto
+          </p>
+        </div>
+
         {/* Photo Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {filteredPhotos.map((photo, index) => (
+          {paginatedPhotos.map((photo, index) => (
             <motion.div
               key={photo.id}
               className="group relative overflow-hidden rounded-2xl cursor-pointer bg-white shadow-lg hover:shadow-2xl transition-all duration-500"
@@ -113,11 +135,14 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
             >
               {/* Image */}
               <div className="aspect-square overflow-hidden">
-                <img
-                  src={photo.src}
-                  alt={photo.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={photo.src}
+                    alt={photo.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
@@ -193,11 +218,14 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
                   transition={{ duration: 0.3 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <img
-                    src={selectedPhoto.src}
-                    alt={selectedPhoto.title}
-                    className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
-                  />
+                  <div className="relative w-full" style={{ height: '70vh' }}>
+                    <Image
+                      src={selectedPhoto.src}
+                      alt={selectedPhoto.title}
+                      fill
+                      className="object-contain rounded-lg"
+                    />
+                  </div>
                   
                   {/* Photo Info */}
                   <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-6 mt-4">
@@ -215,6 +243,63 @@ export default function PhotoGallery({ photos, title = "Galeri Foto", showCatego
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-12">
+            <div className="flex justify-center items-center space-x-2">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+              >
+                Sebelumnya
+              </button>
+
+              <div className="flex items-center space-x-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                  // Show first page, last page, current page, and pages around current page
+                  const shouldShow =
+                    page === 1 ||
+                    page === totalPages ||
+                    Math.abs(page - currentPage) <= 2;
+
+                  if (!shouldShow) {
+                    if (page === 2 || page === totalPages - 1) {
+                      return <span key={page} className="px-4 py-2 text-gray-500">...</span>;
+                    }
+                    return null;
+                  }
+
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-4 py-2 border rounded-lg text-sm font-medium transition-colors ${
+                        currentPage === page
+                          ? 'border-blue-500 bg-blue-500 text-white'
+                          : 'border-gray-300 hover:bg-gray-50 text-gray-700'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+              >
+                Selanjutnya
+              </button>
+            </div>
+            <p className="text-center text-sm text-gray-600 mt-4">
+              Halaman {currentPage} dari {totalPages}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

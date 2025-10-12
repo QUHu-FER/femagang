@@ -1,9 +1,10 @@
 'use client';
 
-// Component untuk menampilkan berita dengan kategori dan filtering
 import { useState } from 'react';
 import { FaCalendarAlt, FaTag, FaEye, FaArrowRight } from 'react-icons/fa';
 import { MdOutlineEnergySavingsLeaf } from 'react-icons/md';
+import Image from 'next/image';
+import Pagination from '@/components/Pagination';
 
 interface NewsItem {
   id: string;
@@ -29,22 +30,8 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Mock data untuk demo
-  const categories = [
-    { id: 'all', name: 'Semua Berita', count: 24 },
-    { id: 'energi-terbarukan', name: 'Energi Terbarukan', count: 8 },
-    { id: 'pertambangan', name: 'Pertambangan', count: 6 },
-    { id: 'kebijakan', name: 'Kebijakan', count: 5 },
-    { id: 'pengumuman', name: 'Pengumuman', count: 3 },
-    { id: 'kegiatan', name: 'Kegiatan', count: 2 }
-  ];
-
-  const allTags = [
-    'Solar Panel', 'Geothermal', 'Izin Tambang', 'Regulasi', 'Sosialisasi', 
-    'Biomassa', 'Hidroelektrik', 'Lingkungan', 'Investasi', 'Teknologi'
-  ];
-
-  const newsData: NewsItem[] = [
+  // Base news data
+  const baseNewsData: NewsItem[] = [
     {
       id: '1',
       title: 'Sumbar Targetkan 30% Energi Terbarukan pada 2030',
@@ -118,8 +105,44 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
       featured: false
     }
   ];
+  
+  // Generate more news items for pagination
+  const generateMoreNews = (baseItem: NewsItem, count: number): NewsItem[] => {
+    const result: NewsItem[] = [];
+    for (let i = 0; i < count; i++) {
+      result.push({
+        ...baseItem,
+        id: `${baseItem.id}-${i}`,
+        title: `${baseItem.title} ${i + 2}`,
+        views: Math.floor(Math.random() * 1000) + 100,
+        date: new Date(new Date(baseItem.date).getTime() + i * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      });
+    }
+    return result;
+  };
 
-  const filteredNews = newsData.filter(item => {
+  // Generate additional news items for each base item
+  const allNewsData = [...baseNewsData];
+  baseNewsData.forEach(news => {
+    allNewsData.push(...generateMoreNews(news, 3)); // Generate 3 more items for each news
+  });
+
+  // Mock data untuk demo
+  const categories = [
+    { id: 'all', name: 'Semua Berita', count: allNewsData.length },
+    { id: 'energi-terbarukan', name: 'Energi Terbarukan', count: allNewsData.filter(n => n.category === 'energi-terbarukan').length },
+    { id: 'pertambangan', name: 'Pertambangan', count: allNewsData.filter(n => n.category === 'pertambangan').length },
+    { id: 'kebijakan', name: 'Kebijakan', count: allNewsData.filter(n => n.category === 'kebijakan').length },
+    { id: 'pengumuman', name: 'Pengumuman', count: allNewsData.filter(n => n.category === 'pengumuman').length },
+    { id: 'kegiatan', name: 'Kegiatan', count: allNewsData.filter(n => n.category === 'kegiatan').length }
+  ];
+
+  const allTags = [
+    'Solar Panel', 'Geothermal', 'Izin Tambang', 'Regulasi', 'Sosialisasi', 
+    'Biomassa', 'Hidroelektrik', 'Lingkungan', 'Investasi', 'Teknologi'
+  ];
+
+  const filteredNews = allNewsData.filter(item => {
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesTag = !selectedTag || item.tags.includes(selectedTag);
     return matchesCategory && matchesTag;
@@ -153,23 +176,23 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-900 ${className}`}>
+    <div className={`bg-gradient-to-b from-blue-600 via-blue-500 to-white ${className}`}>
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="text-center mb-12 pt-12">
+          <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-md">
             Berita & Informasi ESDM
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto drop-shadow">
             Dapatkan informasi terbaru tentang energi, sumber daya mineral, dan kegiatan Dinas ESDM Sumatera Barat
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 mb-8">
+        <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 mb-8 shadow-lg">
           {/* Categories */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-blue-600 mb-4">
               Kategori Berita
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -196,7 +219,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Tags Filter */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Filter berdasarkan Tag
               </label>
               <select
@@ -205,7 +228,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
                   setSelectedTag(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               >
                 <option value="">Semua Tag</option>
                 {allTags.map((tag) => (
@@ -216,13 +239,13 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
             {/* Sort */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Urutkan berdasarkan
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
               >
                 <option value="latest">Terbaru</option>
                 <option value="oldest">Terlama</option>
@@ -235,7 +258,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
         {/* Results Info */}
         <div className="flex justify-between items-center mb-6">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600">
             Menampilkan {startIndex + 1}-{Math.min(startIndex + itemsPerPage, sortedNews.length)} dari {sortedNews.length} berita
           </p>
           {(selectedCategory !== 'all' || selectedTag) && (
@@ -245,7 +268,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
                 setSelectedTag('');
                 setCurrentPage(1);
               }}
-              className="text-blue-500 hover:text-blue-600 text-sm font-medium"
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >
               Hapus Filter
             </button>
@@ -256,11 +279,11 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
         {paginatedNews.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {paginatedNews.map((news) => (
-              <article key={news.id} className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <article key={news.id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
                 {/* Featured Badge */}
                 {news.featured && (
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                       Unggulan
                     </span>
                   </div>
@@ -268,11 +291,12 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
                 {/* Thumbnail */}
                 <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
-                  <img
+                  <Image
                     src={news.thumbnail}
                     alt={news.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
+                    fill
+                    className="object-cover"
+                    onError={(e: { currentTarget: HTMLImageElement }) => {
                       e.currentTarget.src = 'data:image/svg+xml,' + encodeURIComponent(`
                         <svg width="400" height="250" xmlns="http://www.w3.org/2000/svg">
                           <rect width="100%" height="100%" fill="#f3f4f6"/>
@@ -290,10 +314,10 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
                     {news.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                  <p className="text-gray-600 mb-4 line-clamp-3">
                     {news.excerpt}
                   </p>
 
@@ -316,27 +340,27 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
                   </div>
 
                   {/* Meta Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-4 text-sm text-gray-600">
                       <span className="flex items-center gap-1">
-                        <FaCalendarAlt className="w-3 h-3" />
+                        <FaCalendarAlt className="w-3 h-3 text-blue-500" />
                         {formatDate(news.date)}
                       </span>
                       <span className="flex items-center gap-1">
-                        <FaEye className="w-3 h-3" />
+                        <FaEye className="w-3 h-3 text-blue-500" />
                         {news.views.toLocaleString()}
                       </span>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {news.author}
-                    </span>
-                    <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 font-medium">
-                      Baca Selengkapnya
-                      <FaArrowRight className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 font-medium">
+                        {news.author}
+                      </span>
+                      <button className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                        Baca Selengkapnya
+                        <FaArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -356,37 +380,12 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2">
-            <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
-              Sebelumnya
-            </button>
-            
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`px-4 py-2 rounded-lg ${
-                  currentPage === page
-                    ? 'bg-blue-500 text-white'
-                    : 'border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            
-            <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
-              Selanjutnya
-            </button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            className="mt-8"
+          />
         )}
       </div>
     </div>

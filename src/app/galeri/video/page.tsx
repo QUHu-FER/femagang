@@ -4,7 +4,8 @@ import Layout from '@/components/Layout';
 import VideoGallery from '@/components/VideoGallery';
 
 export default function VideoPage() {
-  const videos = [
+  // Base videos data
+  const baseVideos = [
     {
       id: 1,
       title: "Peresmian PLTMH Tanjung Balik Kabupaten Solok",
@@ -106,10 +107,31 @@ export default function VideoPage() {
     }
   ];
 
+  // Generate more videos for pagination
+  const generateMoreVideos = () => {
+    const allVideos = [...baseVideos];
+    for (let i = 1; i <= 2; i++) {
+      baseVideos.forEach((video) => {
+        allVideos.push({
+          ...video,
+          id: video.id + baseVideos.length * i,
+          title: `${video.title} - Part ${i + 1}`,
+          views: Math.floor(video.views * (0.5 + Math.random())),
+          date: new Date(new Date(video.date).getTime() + i * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+        });
+      });
+    }
+    return allVideos;
+  };
+
   return (
     <Layout>
       <VideoGallery 
-        videos={videos} 
+        videos={generateMoreVideos()} 
         title="Galeri Video Dokumentasi"
         showCategories={true}
       />

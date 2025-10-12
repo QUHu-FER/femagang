@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { PhotoIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import Layout from '@/components/Layout';
 
 export default function GaleriPage() {
@@ -123,11 +124,14 @@ export default function GaleriPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <img 
-                src="https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800" 
-                alt="Workshop Energi Terbarukan"
-                className="w-full h-48 object-cover"
-              />
+              <div className="relative h-48 w-full">
+                <Image 
+                  src="https://images.unsplash.com/photo-1497436072909-f5e4be843c96?w=800" 
+                  alt="Workshop Energi Terbarukan"
+                  className="object-cover"
+                  fill
+                />
+              </div>
               <div className="p-6">
                 <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Workshop</span>
                 <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">
@@ -145,11 +149,14 @@ export default function GaleriPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <img 
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800" 
-                alt="Kunjungan PLTA"
-                className="w-full h-48 object-cover"
-              />
+              <div className="relative h-48 w-full">
+                <Image 
+                  src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800" 
+                  alt="Kunjungan PLTA"
+                  className="object-cover"
+                  fill
+                />
+              </div>
               <div className="p-6">
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Kunjungan</span>
                 <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">
@@ -167,11 +174,14 @@ export default function GaleriPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <img 
-                src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800" 
-                alt="Perjanjian Kerjasama"
-                className="w-full h-48 object-cover"
-              />
+              <div className="relative h-48 w-full">
+                <Image 
+                  src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800" 
+                  alt="Perjanjian Kerjasama"
+                  className="object-cover"
+                  fill
+                />
+              </div>
               <div className="p-6">
                 <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Kerjasama</span>
                 <h3 className="text-lg font-semibold text-gray-900 mt-3 mb-2">

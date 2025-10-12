@@ -168,7 +168,38 @@ export default function Footer() {
                 <p>esdm@sumbarprov.go.id</p>
               </div>
             </div>
-            
+
+            {/* Visitor Stats */}
+            <div className="mt-4 space-y-2">
+              <h3 className="text-base font-semibold mb-2 text-white">📊 Statistik Website</h3>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-gradient-to-br from-green-400/20 to-green-700/30 rounded-lg px-3 py-2 border border-green-400/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-green-100">Online</span>
+                    <span className="text-xs text-green-200 font-bold">55</span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-blue-400/20 to-blue-700/30 rounded-lg px-3 py-2 border border-blue-400/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-blue-100">Hari Ini</span>
+                    <span className="text-xs text-blue-200 font-bold">1,385</span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-purple-400/20 to-purple-700/30 rounded-lg px-3 py-2 border border-purple-400/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-purple-100">Kemarin</span>
+                    <span className="text-xs text-purple-200 font-bold">9,144</span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-yellow-400/20 to-yellow-700/30 rounded-lg px-3 py-2 border border-yellow-400/30">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-yellow-100">Total</span>
+                    <span className="text-xs text-yellow-200 font-bold">3.7M</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400">Data diperbarui secara real-time</p>
+            </div>
 
           </motion.div>
         </div>

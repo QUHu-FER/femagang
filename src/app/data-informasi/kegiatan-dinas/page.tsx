@@ -6,14 +6,15 @@ import {
   CalendarDaysIcon,
   UserGroupIcon,
   DocumentTextIcon,
-  MapPinIcon,
-  ClockIcon,
-  EyeIcon
+  MapPinIcon
 } from '@heroicons/react/24/outline';
+import KegiatanList from '@/components/KegiatanList';
 import Layout from '@/components/Layout';
 
 export default function KegiatanDinasPage() {
-  const kegiatanTerbaru = [
+  // Add more items to demonstrate pagination
+  const generateKegiatanBulk = () => {
+    const baseKegiatan = [
     {
       id: 1,
       judul: "Workshop Energi Terbarukan 2024",
@@ -89,32 +90,44 @@ export default function KegiatanDinasPage() {
     }
   ];
 
-  const filterKategori = ["Semua", "Workshop", "Sosialisasi", "Monitoring", "Forum", "Pelatihan", "Pengawasan"];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Selesai":
-        return "bg-green-100 text-green-800";
-      case "Akan Datang":
-        return "bg-blue-100 text-blue-800";
-      case "Berlangsung":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const getKategoriColor = (kategori: string) => {
-    const colors: { [key: string]: string } = {
-      "Workshop": "bg-purple-100 text-purple-800",
-      "Sosialisasi": "bg-blue-100 text-blue-800",
-      "Monitoring": "bg-orange-100 text-orange-800",
-      "Forum": "bg-green-100 text-green-800",
-      "Pelatihan": "bg-indigo-100 text-indigo-800",
-      "Pengawasan": "bg-red-100 text-red-800"
+    // Define the type for Kegiatan
+    type Kegiatan = {
+      id: number;
+      judul: string;
+      tanggal: string;
+      waktu: string;
+      lokasi: string;
+      kategori: string;
+      peserta: string;
+      deskripsi: string;
+      status: string;
+      gambar: string;
+      highlight?: boolean;
     };
-    return colors[kategori] || "bg-gray-100 text-gray-800";
+
+    // Generate more items by modifying the base items
+    const extraKegiatan: Kegiatan[] = [];
+    for (let i = 1; i <= 3; i++) {
+      baseKegiatan.forEach((kegiatan, index) => {
+        extraKegiatan.push({
+          ...kegiatan,
+          id: baseKegiatan.length * i + index + 1,
+          judul: `${kegiatan.judul} - Sesi ${i + 1}`,
+          tanggal: new Date(new Date(kegiatan.tanggal).getTime() + i * 30 * 24 * 60 * 60 * 1000).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+        });
+      });
+    }
+
+    return [...baseKegiatan, ...extraKegiatan];
   };
+
+  const kegiatanTerbaru = generateKegiatanBulk();
+
+  // Stats Section Colors
 
   return (
     <Layout>
@@ -149,106 +162,10 @@ export default function KegiatanDinasPage() {
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-2"
-          >
-            {filterKategori.map((kategori, index) => (
-              <button
-                key={index}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  index === 0 
-                    ? 'bg-blue-600 text-white shadow-lg' 
-                    : 'bg-white text-gray-700 hover:bg-blue-50 shadow-sm border border-gray-200'
-                }`}
-              >
-                {kategori}
-              </button>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Kegiatan List */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {kegiatanTerbaru.map((kegiatan, index) => (
-              <motion.div
-                key={kegiatan.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 ${
-                  kegiatan.highlight ? 'ring-2 ring-blue-500 ring-opacity-50' : ''
-                }`}
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={kegiatan.gambar} 
-                    alt={kegiatan.judul}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(kegiatan.status)}`}>
-                      {kegiatan.status}
-                    </span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getKategoriColor(kegiatan.kategori)}`}>
-                      {kegiatan.kategori}
-                    </span>
-                  </div>
-                  {kegiatan.highlight && (
-                    <div className="absolute top-4 right-4">
-                      <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                    {kegiatan.judul}
-                  </h3>
-                  
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
-                    {kegiatan.deskripsi}
-                  </p>
-
-                  {/* Details */}
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <CalendarDaysIcon className="w-4 h-4 mr-2 text-blue-500" />
-                      {kegiatan.tanggal}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <ClockIcon className="w-4 h-4 mr-2 text-green-500" />
-                      {kegiatan.waktu}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <MapPinIcon className="w-4 h-4 mr-2 text-red-500" />
-                      {kegiatan.lokasi}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <UserGroupIcon className="w-4 h-4 mr-2 text-purple-500" />
-                      {kegiatan.peserta}
-                    </div>
-                  </div>
-
-                  {/* Action Button */}
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center">
-                    <EyeIcon className="w-4 h-4 mr-2" />
-                    Lihat Detail
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <KegiatanList kegiatan={kegiatanTerbaru} />
         </div>
       </section>
 

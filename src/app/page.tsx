@@ -13,12 +13,32 @@ import {
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
-import AnimatedCounter from '@/components/AnimatedCounter';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import TypewriterText from '@/components/TypewriterText';
 import SocialShare from '@/components/SocialShare';
 import GlobalSearch from '@/components/GlobalSearch';
 import NewsTickerBanner from '@/components/NewsTickerBanner';
+import Image from 'next/image';
+
+// Menyiapkan loader untuk gambar
+const shimmer = (w: number, h: number) => `
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#f3f4f6" offset="20%" />
+      <stop stop-color="#eaebee" offset="50%" />
+      <stop stop-color="#f3f4f6" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="#f3f4f6" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`;
+
+const toBase64 = (str: string) =>
+  typeof window === 'undefined'
+    ? Buffer.from(str).toString('base64')
+    : window.btoa(str);
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -126,9 +146,11 @@ export default function Home() {
       <NewsTickerBanner />
       
       {/* Hero Section */}
-      <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+      <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden isolate">
         {/* Particles Background */}
-        <ParticlesBackground />
+        <div className="absolute inset-0 z-0">
+          <ParticlesBackground />
+        </div>
         
         {/* Background Elements */}
         <div className="absolute inset-0">
@@ -157,11 +179,14 @@ export default function Home() {
                     >
                       <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 sm:px-8 sm:py-4 mb-3 sm:mb-6">
                         <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 overflow-hidden">
-                          <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
-                            alt="Logo Sumatera Barat"
-                            className="w-full h-full object-contain"
-                          />
+                          <div className="relative w-full h-full">
+                            <Image
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
+                              alt="Logo Sumatera Barat"
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
                         </div>
                         <div className="text-left">
                           <div className="text-white font-bold text-sm sm:text-lg">DINAS ESDM</div>
@@ -336,12 +361,17 @@ export default function Home() {
                 <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden flex flex-col h-full">
                   {/* Thumbnail */}
                   <div className="h-32 sm:h-36 w-full bg-gradient-to-br from-blue-100 via-white/30 to-purple-100 flex items-center justify-center overflow-hidden">
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      className="object-contain h-full w-full transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={item.thumbnail}
+                        alt={item.title}
+                        fill
+                        className="object-contain transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                      />
+                    </div>
                   </div>
                   <div className="flex-1 flex flex-col p-6 sm:p-8">
                     {/* Kategori & Tanggal */}
@@ -531,11 +561,15 @@ export default function Home() {
             >
               {/* Main Featured News */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="h-40 sm:h-48 overflow-hidden">
-                  <img 
+                <div className="relative h-40 sm:h-48 overflow-hidden">
+                  <Image 
                     src={news[0].thumbnail}
                     alt={news[0].title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
                   />
                 </div>
                 <div className="p-4 sm:p-6">
@@ -573,11 +607,15 @@ export default function Home() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <div className="flex">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 overflow-hidden flex-shrink-0">
-                        <img
+                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 overflow-hidden flex-shrink-0">
+                        <Image
                           src={item.thumbnail}
                           alt={item.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 80px, 96px"
+                          placeholder="blur"
+                          blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(96, 96))}`}
                         />
                       </div>
                       <div className="p-3 sm:p-4 flex-1">
@@ -623,11 +661,15 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <div className="h-40 sm:h-48 overflow-hidden">
-                  <img
+                <div className="relative h-40 sm:h-48 overflow-hidden">
+                  <Image
                     src={item.thumbnail}
                     alt={item.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
                   />
                 </div>
                 <div className="p-4 sm:p-6">
@@ -655,123 +697,45 @@ export default function Home() {
             ))}
           </motion.div>
           
+          {/* Pagination */}
           <motion.div
-            className="text-center mt-12"
+            className="flex flex-col items-center gap-4 mt-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 0.4 }}
           >
+            <div className="flex items-center justify-center space-x-2">
+              <button 
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Previous
+              </button>
+              <div className="flex items-center space-x-1">
+                <button className="px-4 py-2 border border-blue-500 bg-blue-500 text-white rounded-lg text-sm font-medium">
+                  1
+                </button>
+                <button className="px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-lg text-sm font-medium text-gray-700">
+                  2
+                </button>
+                <button className="px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-lg text-sm font-medium text-gray-700">
+                  3
+                </button>
+                <span className="px-4 py-2 text-gray-600">...</span>
+                <button className="px-4 py-2 border border-gray-300 hover:bg-gray-50 rounded-lg text-sm font-medium text-gray-700">
+                  8
+                </button>
+              </div>
+              <button 
+                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium text-gray-700"
+              >
+                Next
+              </button>
+            </div>
             <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl">
               Lihat Semua Berita
             </button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Statistics Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-slate-900/90 to-blue-900/80"></div>
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform skew-x-12"></div>
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/5 to-transparent transform -skew-x-12"></div>
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="text-center mb-10 sm:mb-12 md:mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-4 sm:mb-6 border border-white/20">
-              <span className="text-white font-semibold text-xs sm:text-sm">📊 STATISTIK WEBSITE</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 md:mb-6">Data Pengunjung</h2>
-            <p className="text-base sm:text-lg md:text-xl text-blue-200 max-w-2xl mx-auto px-4 sm:px-0">
-              Transparansi data kunjungan website Dinas ESDM Sumatera Barat
-            </p>
-          </motion.div>
-          
-          {/* Redesigned Visitor Stats */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6 md:gap-8 w-full max-w-2xl mx-auto">
-            {/* Online */}
-            <motion.div
-              className="relative flex flex-col items-center bg-gradient-to-br from-green-400/20 to-green-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-green-400/30 hover:scale-105 transition-transform duration-400"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: 0 }}
-            >
-              <span className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full px-2 py-1 text-xs shadow">Online</span>
-              <span className="text-3xl mb-2 animate-pulse">🟢</span>
-              <span className="text-2xl font-bold text-green-200 mb-1">
-                <AnimatedCounter target={55} duration={1800} />
-              </span>
-              <span className="text-xs text-green-100 tracking-wide">Pengunjung</span>
-            </motion.div>
-            {/* Hari Ini */}
-            <motion.div
-              className="relative flex flex-col items-center bg-gradient-to-br from-blue-400/20 to-blue-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-blue-400/30 hover:scale-105 transition-transform duration-400"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <span className="absolute -top-3 -right-3 bg-blue-500 text-white rounded-full px-2 py-1 text-xs shadow">Hari Ini</span>
-              <span className="text-3xl mb-2 animate-bounce">📈</span>
-              <span className="text-2xl font-bold text-blue-200 mb-1">
-                <AnimatedCounter target={1385} duration={1800} />
-              </span>
-              <span className="text-xs text-blue-100 tracking-wide">Kunjungan</span>
-            </motion.div>
-            {/* Kemarin */}
-            <motion.div
-              className="relative flex flex-col items-center bg-gradient-to-br from-purple-400/20 to-purple-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-purple-400/30 hover:scale-105 transition-transform duration-400"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <span className="absolute -top-3 -right-3 bg-purple-500 text-white rounded-full px-2 py-1 text-xs shadow">Kemarin</span>
-              <span className="text-3xl mb-2 animate-bounce">📅</span>
-              <span className="text-2xl font-bold text-purple-200 mb-1">
-                <AnimatedCounter target={9144} duration={1800} />
-              </span>
-              <span className="text-xs text-purple-100 tracking-wide">Kunjungan</span>
-            </motion.div>
-            {/* Total Visitor */}
-            <motion.div
-              className="relative flex flex-col items-center bg-gradient-to-br from-yellow-400/20 to-yellow-700/30 rounded-xl px-4 py-5 min-w-[120px] shadow-lg border border-yellow-400/30 hover:scale-105 transition-transform duration-400"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <span className="absolute -top-3 -right-3 bg-yellow-500 text-white rounded-full px-2 py-1 text-xs shadow">Total</span>
-              <span className="text-3xl mb-2 animate-spin-slow">👥</span>
-              <span className="text-2xl font-bold text-yellow-100 mb-1">
-                <AnimatedCounter target={3707161} duration={2200} />
-              </span>
-              <span className="text-xs text-yellow-100 tracking-wide">Visitor</span>
-            </motion.div>
-          </div>
-          
-          {/* Additional Info */}
-          <motion.div
-            className="text-center mt-10 sm:mt-12 md:mt-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <p className="text-blue-200 text-sm sm:text-base md:text-lg px-4 sm:px-0">
-              Data diperbarui secara real-time setiap hari untuk transparansi publik
-            </p>
           </motion.div>
         </div>
       </section>
