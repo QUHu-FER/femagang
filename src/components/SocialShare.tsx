@@ -10,7 +10,7 @@ interface SocialShareProps {
   className?: string;
 }
 
-export default function SocialShare({ 
+export default function SocialShare({
   url = typeof window !== 'undefined' ? window.location.href : '',
   title = "Dinas ESDM Sumatera Barat",
   // description = "Portal resmi Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat",
@@ -51,46 +51,52 @@ export default function SocialShare({
           onClick={() => handleShare('facebook')}
           className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200"
           title="Bagikan ke Facebook"
+          aria-label="Bagikan ke Facebook"
         >
           <FaFacebook className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => handleShare('twitter')}
           className="p-2 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-200"
           title="Bagikan ke Twitter"
+          aria-label="Bagikan ke Twitter"
         >
           <FaTwitter className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => handleShare('whatsapp')}
           className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors duration-200"
           title="Bagikan ke WhatsApp"
+          aria-label="Bagikan ke WhatsApp"
         >
           <FaWhatsapp className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => handleShare('linkedin')}
           className="p-2 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors duration-200"
           title="Bagikan ke LinkedIn"
+          aria-label="Bagikan ke LinkedIn"
         >
           <FaLinkedin className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => handleShare('telegram')}
           className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200"
           title="Bagikan ke Telegram"
+          aria-label="Bagikan ke Telegram"
         >
           <FaTelegram className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={copyToClipboard}
           className="p-2 rounded-full bg-gray-600 text-white hover:bg-gray-700 transition-colors duration-200 relative"
           title="Salin Link"
+          aria-label="Salin Link"
         >
           <FaLink className="w-4 h-4" />
           {copied && (

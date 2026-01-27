@@ -178,12 +178,12 @@ export default function Home() {
                         <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 overflow-hidden">
                           <div className="relative w-full h-full">
                             <Image
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
+                              src="/logo-sumbar.png"
                               alt="Logo Sumatera Barat"
                               fill
                               className="object-contain"
                               priority
-                              sizes="(max-width: 640px) 32px, 48px"
+                              sizes="(max-width: 640px) 48px, 64px"
                             />
                           </div>
                         </div>
@@ -196,9 +196,9 @@ export default function Home() {
 
                     <motion.h1
                       className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
-                      initial={{ y: 50, opacity: 0 }}
+                      initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.5, duration: 0.8 }}
+                      transition={{ duration: 0.5 }}
                     >
                       <span className="block text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-blue-200 mb-1 sm:mb-2 md:mb-3">
                         {slide.title}
@@ -225,18 +225,18 @@ export default function Home() {
 
                     <motion.p
                       className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100 max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4"
-                      initial={{ y: 50, opacity: 0 }}
+                      initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.7, duration: 0.8 }}
+                      transition={{ delay: 0.1, duration: 0.5 }}
                     >
                       {slide.description}
                     </motion.p>
 
                     <motion.div
                       className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 mb-12 sm:mb-16"
-                      initial={{ y: 50, opacity: 0 }}
+                      initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.9, duration: 0.8 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
                     >
                       <motion.button
                         className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs backdrop-blur-sm border border-white/10 text-sm sm:text-base"
