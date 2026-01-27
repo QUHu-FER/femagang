@@ -34,13 +34,13 @@ export default function Footer() {
   return (
     <footer className="relative bg-gradient-to-b from-gray-900 via-blue-900 to-gray-900 text-white">
       {/* Decorative background pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
       />
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer */}
         <div className="py-4 grid grid-cols-1 md:grid-cols-5 gap-3">
@@ -63,19 +63,19 @@ export default function Footer() {
             <p className="text-gray-300 text-xs leading-relaxed">
               Dinas Energi dan Sumber Daya Mineral Provinsi Sumatera Barat
             </p>
-            
+
             {/* Social Media */}
             <div className="flex space-x-2 mt-2">
-              <a href="#" className="p-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+              <a href="#" className="p-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors" aria-label="Facebook">
                 <FaFacebook className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-1.5 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+              <a href="#" className="p-1.5 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors" aria-label="Twitter">
                 <FaTwitter className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-1.5 bg-pink-600 hover:bg-pink-700 rounded-lg transition-colors">
+              <a href="#" className="p-1.5 bg-pink-600 hover:bg-pink-700 rounded-lg transition-colors" aria-label="Instagram">
                 <FaInstagram className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="p-1.5 bg-red-600 hover:bg-red-700 rounded-lg transition-colors">
+              <a href="#" className="p-1.5 bg-red-600 hover:bg-red-700 rounded-lg transition-colors" aria-label="YouTube">
                 <FaYoutube className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -130,8 +130,8 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerSections.situsLain.map((item) => (
                 <li key={item.name}>
-                  <a 
-                    href={item.href} 
+                  <a
+                    href={item.href}
                     target={item.target || '_self'}
                     className="text-gray-300 hover:text-blue-400 transition-colors text-xs"
                   >
@@ -203,7 +203,7 @@ export default function Footer() {
 
           </motion.div>
         </div>
-        
+
         {/* Bottom Footer */}
         <div className="border-t border-gray-700 py-2">
           <div className="flex flex-col md:flex-row justify-between items-center">

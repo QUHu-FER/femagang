@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { 
+import {
   Bars3Icon,
   XMarkIcon,
   ChevronDownIcon,
@@ -77,7 +77,7 @@ export default function Navbar() {
   const isDropdownActive = (menuName: string) => {
     const menuItems = dropdownMenus[menuName];
     if (!menuItems) return false;
-    
+
     return menuItems.some(item => {
       if (item.href === '/') {
         return pathname === '/';
@@ -179,17 +179,16 @@ export default function Navbar() {
               </p>
             </div>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1 flex-1 justify-end overflow-visible">
             {/* Menu utama pertama - Beranda */}
             <Link
               href="/"
-              className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${
-                isActive('/')
+              className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${isActive('/')
                   ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                   : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+                }`}
             >
               Beranda
               {isActive('/') && (
@@ -204,25 +203,25 @@ export default function Navbar() {
             </Link>
 
             {/* Dropdown Menus - urutan sesuai gambar: Profil, Data dan Informasi, Media Data, PPID, Download Area, Hubungi Kami, Informasi Pelayanan Publik, Lapor */}
-            
+
             {/* Profil Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('Profil')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'Profil' || isDropdownActive('Profil')
+                aria-label="Menu Profil"
+                aria-expanded={activeDropdown === 'Profil'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Profil' || isDropdownActive('Profil')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>Profil</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'Profil' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'Profil' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('Profil') && (
@@ -275,23 +274,23 @@ export default function Navbar() {
             </div>
 
             {/* Data dan Informasi Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('Data dan Informasi')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'Data dan Informasi' || isDropdownActive('Data dan Informasi')
+                aria-label="Menu Data dan Informasi"
+                aria-expanded={activeDropdown === 'Data dan Informasi'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Data dan Informasi' || isDropdownActive('Data dan Informasi')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>Data dan Informasi</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'Data dan Informasi' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'Data dan Informasi' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('Data dan Informasi') && (
@@ -344,23 +343,23 @@ export default function Navbar() {
             </div>
 
             {/* Media Data Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('Media Data')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'Media Data' || isDropdownActive('Media Data')
+                aria-label="Menu Media Data"
+                aria-expanded={activeDropdown === 'Media Data'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Media Data' || isDropdownActive('Media Data')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>Media Data</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'Media Data' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'Media Data' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('Media Data') && (
@@ -413,23 +412,23 @@ export default function Navbar() {
             </div>
 
             {/* PPID Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('PPID')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'PPID' || isDropdownActive('PPID')
+                aria-label="Menu PPID"
+                aria-expanded={activeDropdown === 'PPID'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'PPID' || isDropdownActive('PPID')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>PPID</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'PPID' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'PPID' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('PPID') && (
@@ -482,23 +481,23 @@ export default function Navbar() {
             </div>
 
             {/* Download Area Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('Download Area')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'Download Area' || isDropdownActive('Download Area')
+                aria-label="Menu Download Area"
+                aria-expanded={activeDropdown === 'Download Area'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Download Area' || isDropdownActive('Download Area')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>Download Area</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'Download Area' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'Download Area' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('Download Area') && (
@@ -553,11 +552,10 @@ export default function Navbar() {
             {/* Hubungi Kami - link biasa */}
             <Link
               href="/kontak"
-              className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${
-                isActive('/kontak')
+              className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${isActive('/kontak')
                   ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                   : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+                }`}
             >
               Hubungi Kami
               {isActive('/kontak') && (
@@ -572,23 +570,23 @@ export default function Navbar() {
             </Link>
 
             {/* Informasi Pelayanan Publik Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('Informasi Pelayanan Publik')}
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${
-                  activeDropdown === 'Informasi Pelayanan Publik' || isDropdownActive('Informasi Pelayanan Publik')
+                aria-label="Menu Informasi Pelayanan Publik"
+                aria-expanded={activeDropdown === 'Informasi Pelayanan Publik'}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Informasi Pelayanan Publik' || isDropdownActive('Informasi Pelayanan Publik')
                     ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
                     : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <span>Informasi Pelayanan Publik</span>
-                <ChevronDownIcon 
-                  className={`w-4 h-4 transition-transform duration-300 ${
-                    activeDropdown === 'Informasi Pelayanan Publik' ? 'rotate-180' : ''
-                  }`} 
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'Informasi Pelayanan Publik' ? 'rotate-180' : ''
+                    }`}
                 />
                 {/* Active indicator untuk dropdown yang aktif */}
                 {isDropdownActive('Informasi Pelayanan Publik') && (
@@ -663,6 +661,7 @@ export default function Navbar() {
             <button
               onClick={() => setSearchOpen(true)}
               className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+              aria-label="Cari"
               title="Cari"
             >
               <FaSearch className="w-5 h-5 text-gray-700" />
@@ -672,6 +671,8 @@ export default function Navbar() {
             <button
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 mobile-menu-container"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="w-6 h-6 text-gray-700" />
@@ -697,11 +698,10 @@ export default function Navbar() {
                 <Link
                   href="/"
                   onClick={handleMenuItemClick}
-                  className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    isActive('/')
+                  className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${isActive('/')
                       ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
+                    }`}
                 >
                   Beranda
                 </Link>
@@ -710,31 +710,30 @@ export default function Navbar() {
                 {['Profil', 'Data dan Informasi', 'Media Data', 'PPID', 'Download Area'].map((menuName) => {
                   const menuItems = dropdownMenus[menuName];
                   if (!menuItems) return null;
-                  
+
                   return (
                     <div key={menuName} className="border-t border-gray-100 pt-2">
                       <button
                         onClick={() => handleDropdownToggle(menuName)}
-                        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${
-                          activeDropdown === menuName
+                        aria-label={`Menu ${menuName}`}
+                        aria-expanded={activeDropdown === menuName}
+                        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${activeDropdown === menuName
                             ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
                             : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                        }`}
+                          }`}
                       >
                         <span>{menuName}</span>
                         <div className="flex items-center space-x-2">
                           {/* Badge indicator for number of items */}
-                          <span className={`text-xs px-2 py-1 rounded-full ${
-                            activeDropdown === menuName 
-                              ? 'bg-white/20 text-white' 
+                          <span className={`text-xs px-2 py-1 rounded-full ${activeDropdown === menuName
+                              ? 'bg-white/20 text-white'
                               : 'bg-gray-200 text-gray-600'
-                          }`}>
+                            }`}>
                             {menuItems.length}
                           </span>
-                          <ChevronDownIcon 
-                            className={`w-5 h-5 transition-transform duration-300 ${
-                              activeDropdown === menuName ? 'rotate-180' : ''
-                            }`} 
+                          <ChevronDownIcon
+                            className={`w-5 h-5 transition-transform duration-300 ${activeDropdown === menuName ? 'rotate-180' : ''
+                              }`}
                           />
                         </div>
                         {/* Active indicator for mobile */}
@@ -764,7 +763,7 @@ export default function Navbar() {
                                   key={item.name}
                                   initial={{ opacity: 0, x: -20 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  // transition={{ duration: 0.2, delay: index * 0.05 }}
+                                // transition={{ duration: 0.2, delay: index * 0.05 }}
                                 >
                                   <Link
                                     href={item.href}
@@ -802,11 +801,10 @@ export default function Navbar() {
                 <Link
                   href="/kontak"
                   onClick={handleMenuItemClick}
-                  className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    isActive('/kontak')
+                  className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${isActive('/kontak')
                       ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
                       : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
+                    }`}
                 >
                   Hubungi Kami
                 </Link>
@@ -815,25 +813,24 @@ export default function Navbar() {
                 <div className="border-t border-gray-100 pt-2">
                   <button
                     onClick={() => handleDropdownToggle('Informasi Pelayanan Publik')}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${
-                      activeDropdown === 'Informasi Pelayanan Publik'
+                    aria-label="Menu Informasi Pelayanan Publik"
+                    aria-expanded={activeDropdown === 'Informasi Pelayanan Publik'}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${activeDropdown === 'Informasi Pelayanan Publik'
                         ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
                         : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                    }`}
+                      }`}
                   >
                     <span>Informasi Pelayanan Publik</span>
                     <div className="flex items-center space-x-2">
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        activeDropdown === 'Informasi Pelayanan Publik' 
-                          ? 'bg-white/20 text-white' 
+                      <span className={`text-xs px-2 py-1 rounded-full ${activeDropdown === 'Informasi Pelayanan Publik'
+                          ? 'bg-white/20 text-white'
                           : 'bg-gray-200 text-gray-600'
-                      }`}>
+                        }`}>
                         {dropdownMenus['Informasi Pelayanan Publik'].length}
                       </span>
-                      <ChevronDownIcon 
-                        className={`w-5 h-5 transition-transform duration-300 ${
-                          activeDropdown === 'Informasi Pelayanan Publik' ? 'rotate-180' : ''
-                        }`} 
+                      <ChevronDownIcon
+                        className={`w-5 h-5 transition-transform duration-300 ${activeDropdown === 'Informasi Pelayanan Publik' ? 'rotate-180' : ''
+                          }`}
                       />
                     </div>
                   </button>
