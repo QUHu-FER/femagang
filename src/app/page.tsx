@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import {
   ChevronRightIcon,
   PhoneIcon,
@@ -238,25 +239,29 @@ export default function Home() {
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.2, duration: 0.5 }}
                     >
-                      <motion.button
-                        className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs backdrop-blur-sm border border-white/10 text-sm sm:text-base"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <span>Jelajahi Layanan</span>
-                        <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                      </motion.button>
+                      <Link href="/layanan" className="w-full sm:w-auto">
+                        <motion.div
+                          className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 w-full justify-center max-w-xs backdrop-blur-sm border border-white/10 text-sm sm:text-base cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <span>Jelajahi Layanan</span>
+                          <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                        </motion.div>
+                      </Link>
 
-                      <motion.button
-                        className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs text-sm sm:text-base"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                          <PlayIcon className="w-3 h-3 sm:w-4 sm:h-4 ml-0.5" />
-                        </div>
-                        <span>Tonton Profil</span>
-                      </motion.button>
+                      <Link href="/profil" className="w-full sm:w-auto">
+                        <motion.div
+                          className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 w-full justify-center max-w-xs text-sm sm:text-base cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                            <PlayIcon className="w-3 h-3 sm:w-4 sm:h-4 ml-0.5" />
+                          </div>
+                          <span>Tonton Profil</span>
+                        </motion.div>
+                      </Link>
                     </motion.div>
                   </div>
                 </div>
@@ -731,9 +736,9 @@ export default function Home() {
                 Next
               </button>
             </div>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl">
+            <Link href="/berita" className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl inline-block">
               Lihat Semua Berita
-            </button>
+            </Link>
           </motion.div>
         </div>
       </section>
