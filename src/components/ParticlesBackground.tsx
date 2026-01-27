@@ -24,6 +24,10 @@ const ParticlesBackground = () => {
     await loadSlim(engine);
   }, []);
 
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <Particles
       id="tsparticles"
@@ -38,15 +42,15 @@ const ParticlesBackground = () => {
           enable: false,
           zIndex: -1
         },
-        fpsLimit: isMobile ? 30 : 60, // Reduced FPS for better performance
+        fpsLimit: 60,
         interactivity: {
           events: {
             onClick: {
-              enable: !isMobile, // Disable on mobile
+              enable: true,
               mode: "push",
             },
             onHover: {
-              enable: !isMobile, // Disable on mobile
+              enable: true,
               mode: "repulse",
             },
             resize: true,
@@ -79,7 +83,7 @@ const ParticlesBackground = () => {
               default: "bounce",
             },
             random: false,
-            speed: isMobile ? 0.5 : 1, // Slower on mobile
+            speed: 1,
             straight: false,
           },
           number: {
@@ -87,7 +91,7 @@ const ParticlesBackground = () => {
               enable: true,
               area: 800,
             },
-            value: isMobile ? 30 : 60, // Fewer particles on mobile
+            value: 60,
           },
           opacity: {
             value: 0.3,

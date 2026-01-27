@@ -13,7 +13,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
-import ParticlesBackground from '@/components/ParticlesBackground';
+import dynamic from 'next/dynamic';
+
+const ParticlesBackground = dynamic(() => import('@/components/ParticlesBackground'), { ssr: false });
 import TypewriterText from '@/components/TypewriterText';
 import SocialShare from '@/components/SocialShare';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -171,12 +173,7 @@ export default function Home() {
               <div key={index} className="w-full h-full flex-shrink-0 relative">
                 <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8">
                   <div className="max-w-6xl mx-auto text-center w-full">
-                    <motion.div
-                      className="mb-4 sm:mb-6 md:mb-8"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.3, duration: 0.8 }}
-                    >
+                    <div className="mb-4 sm:mb-6 md:mb-8">
                       <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 sm:px-8 sm:py-4 mb-3 sm:mb-6">
                         <div className="w-8 h-8 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 overflow-hidden">
                           <div className="relative w-full h-full">
@@ -195,7 +192,7 @@ export default function Home() {
                           <div className="text-blue-200 font-medium text-xs sm:text-sm opacity-90">Provinsi Sumatera Barat</div>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
 
                     <motion.h1
                       className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
@@ -298,8 +295,8 @@ export default function Home() {
               aria-label={`Slide ${index + 1}: ${slide.title}`}
             >
               <div className={`relative overflow-hidden rounded-full transition-all duration-500 ${index === activeSlide
-                  ? 'w-12 h-3 sm:w-16 sm:h-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 shadow-lg shadow-blue-400/50'
-                  : 'w-3 h-3 sm:w-4 sm:h-4 bg-white/40 hover:bg-white/60'
+                ? 'w-12 h-3 sm:w-16 sm:h-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 shadow-lg shadow-blue-400/50'
+                : 'w-3 h-3 sm:w-4 sm:h-4 bg-white/40 hover:bg-white/60'
                 }`}>
                 {index === activeSlide && (
                   <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent animate-pulse"></div>
