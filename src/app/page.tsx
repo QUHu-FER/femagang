@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  ChevronRightIcon, 
-  PhoneIcon, 
-  EnvelopeIcon, 
+import {
+  ChevronRightIcon,
+  PhoneIcon,
+  EnvelopeIcon,
   MapPinIcon,
   BoltIcon,
   CubeIcon,
@@ -144,14 +144,14 @@ export default function Home() {
     <Layout>
       {/* News Ticker Banner */}
       <NewsTickerBanner />
-      
+
       {/* Hero Section */}
-      <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden isolate">
+      <section className="relative h-[100vh] min-h-[500px] max-h-[800px] sm:h-[85vh] sm:min-h-[600px] sm:max-h-[900px] bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden isolate" aria-label="Hero banner">
         {/* Particles Background */}
         <div className="absolute inset-0 z-0">
           <ParticlesBackground />
         </div>
-        
+
         {/* Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-slate-900/80 to-blue-900/70"></div>
@@ -163,7 +163,7 @@ export default function Home() {
 
         {/* Slides Container */}
         <div className="relative h-full overflow-hidden">
-          <div 
+          <div
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${activeSlide * 100}%)` }}
           >
@@ -185,6 +185,8 @@ export default function Home() {
                               alt="Logo Sumatera Barat"
                               fill
                               className="object-contain"
+                              priority
+                              sizes="(max-width: 640px) 32px, 48px"
                             />
                           </div>
                         </div>
@@ -194,8 +196,8 @@ export default function Home() {
                         </div>
                       </div>
                     </motion.div>
-                    
-                    <motion.h1 
+
+                    <motion.h1
                       className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
@@ -207,24 +209,24 @@ export default function Home() {
                       <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent leading-tight block">
                         {/* Desktop version */}
                         <span className="hidden sm:block">
-                          <TypewriterText 
-                            text={slide.subtitle} 
+                          <TypewriterText
+                            text={slide.subtitle}
                             speed={50}
                             delay={1000}
                           />
                         </span>
                         {/* Mobile version - shorter text */}
                         <span className="block sm:hidden">
-                          <TypewriterText 
-                            text={slide.subtitle.length > 50 ? slide.subtitle.substring(0, 50) + '...' : slide.subtitle} 
+                          <TypewriterText
+                            text={slide.subtitle.length > 50 ? slide.subtitle.substring(0, 50) + '...' : slide.subtitle}
                             speed={50}
                             delay={1000}
                           />
                         </span>
                       </span>
                     </motion.h1>
-                    
-                    <motion.p 
+
+                    <motion.p
                       className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100 max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
@@ -232,14 +234,14 @@ export default function Home() {
                     >
                       {slide.description}
                     </motion.p>
-                    
+
                     <motion.div
                       className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 mb-12 sm:mb-16"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.9, duration: 0.8 }}
                     >
-                      <motion.button 
+                      <motion.button
                         className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-blue-500/25 hover:scale-105 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs backdrop-blur-sm border border-white/10 text-sm sm:text-base"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -247,8 +249,8 @@ export default function Home() {
                         <span>Jelajahi Layanan</span>
                         <ChevronRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                       </motion.button>
-                      
-                      <motion.button 
+
+                      <motion.button
                         className="group border-2 border-white/40 bg-white/10 backdrop-blur-sm text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/60 transition-all duration-300 flex items-center space-x-2 w-full sm:w-auto justify-center max-w-xs text-sm sm:text-base"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -265,7 +267,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        
+
         {/* Navigation Arrows - Hide on mobile */}
         <button
           onClick={() => handleSlideChange(activeSlide === 0 ? slides.length - 1 : activeSlide - 1)}
@@ -275,7 +277,7 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        
+
         <button
           onClick={() => handleSlideChange(activeSlide === slides.length - 1 ? 0 : activeSlide + 1)}
           className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-20"
@@ -284,28 +286,26 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
-        
+
         {/* Slide indicators */}
         <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 sm:space-x-4 z-20">
           {slides.map((slide, index) => (
             <button
               key={index}
               onClick={() => handleSlideChange(index)}
-              className={`group relative transition-all duration-500 ${
-                index === activeSlide ? 'scale-110' : 'hover:scale-105'
-              }`}
+              className={`group relative transition-all duration-500 ${index === activeSlide ? 'scale-110' : 'hover:scale-105'
+                }`}
               aria-label={`Slide ${index + 1}: ${slide.title}`}
             >
-              <div className={`relative overflow-hidden rounded-full transition-all duration-500 ${
-                index === activeSlide 
-                  ? 'w-12 h-3 sm:w-16 sm:h-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 shadow-lg shadow-blue-400/50' 
+              <div className={`relative overflow-hidden rounded-full transition-all duration-500 ${index === activeSlide
+                  ? 'w-12 h-3 sm:w-16 sm:h-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 shadow-lg shadow-blue-400/50'
                   : 'w-3 h-3 sm:w-4 sm:h-4 bg-white/40 hover:bg-white/60'
-              }`}>
+                }`}>
                 {index === activeSlide && (
                   <div className="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent animate-pulse"></div>
                 )}
               </div>
-              
+
               {/* Tooltip - Hide on mobile */}
               <div className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
                 <div className="bg-white/95 backdrop-blur-sm text-gray-800 text-xs px-3 py-2 rounded-lg shadow-xl whitespace-nowrap">
@@ -319,14 +319,14 @@ export default function Home() {
 
         {/* Scroll Indicator - Responsive */}
         <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 text-white/70 z-20">
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center space-y-1 sm:space-y-2"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <span className="text-xs sm:text-sm font-medium">Scroll</span>
             <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/40 rounded-full flex justify-center relative overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="w-0.5 h-2 sm:w-1 sm:h-3 bg-gradient-to-b from-white/70 to-white/30 rounded-full mt-1 sm:mt-2"
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -346,7 +346,7 @@ export default function Home() {
       </section>
 
       {/* Floating News Cards - Berita Terkini dengan Thumbnail */}
-      <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white" aria-label="Berita Terkini">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {news.map((item, index) => (
@@ -370,6 +370,7 @@ export default function Home() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         placeholder="blur"
                         blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -406,7 +407,7 @@ export default function Home() {
       </section>
 
       {/* Quick Links Section */}
-      <section className="py-8 sm:py-12 bg-gradient-to-b from-white to-gray-50 border-b border-gray-100">
+      <section className="py-8 sm:py-12 bg-gradient-to-b from-white to-gray-50 border-b border-gray-100" aria-label="Layanan Digital">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-6 sm:mb-8 md:mb-10"
@@ -417,7 +418,7 @@ export default function Home() {
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Layanan Digital</h2>
             <p className="text-sm sm:text-base text-gray-600 px-4 sm:px-0">Akses cepat ke berbagai layanan pemerintahan</p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {quickLinks.map((link, index) => (
               <motion.button
@@ -437,7 +438,7 @@ export default function Home() {
                 <div className="relative z-10">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-white font-bold text-lg sm:text-xl drop-shadow-md tracking-wide">
-                      {link.title.split(' ').length > 1 ? link.title.split(' ').map(w => w[0]).join('') : link.title.slice(0,2)}
+                      {link.title.split(' ').length > 1 ? link.title.split(' ').map(w => w[0]).join('') : link.title.slice(0, 2)}
                     </span>
                   </div>
                   <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-blue-600 transition-colors">
@@ -458,9 +459,9 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
+      <section className="py-12 sm:py-16 md:py-20 bg-white" aria-label="Bidang Layanan ESDM">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-10 sm:mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -472,11 +473,11 @@ export default function Home() {
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">Bidang Layanan ESDM</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-              Komitmen kami dalam membangun Sumatera Barat melalui pengelolaan energi terbarukan, 
+              Komitmen kami dalam membangun Sumatera Barat melalui pengelolaan energi terbarukan,
               pertambangan berkelanjutan, dan pemberdayaan sumber daya mineral untuk kesejahteraan rakyat
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <motion.div
@@ -490,14 +491,14 @@ export default function Home() {
               >
                 {/* Background Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 {/* Icon Container */}
                 <div className="relative z-10 mb-6">
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                     {service.icon}
                   </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10">
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
@@ -506,21 +507,21 @@ export default function Home() {
                   <p className="text-gray-600 mb-6 leading-relaxed text-lg">
                     {service.description}
                   </p>
-                  
+
                   {/* CTA Button */}
                   <button className="group/btn inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-lg transition-colors duration-300">
                     <span>Pelajari Lebih Lanjut</span>
                     <ChevronRightIcon className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" />
                   </button>
                 </div>
-                
+
                 {/* Decorative Elements */}
                 <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-blue-100/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-100/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               </motion.div>
             ))}
           </div>
-          
+
           {/* Call to Action */}
           <motion.div
             className="text-center mt-16"
@@ -537,9 +538,9 @@ export default function Home() {
       </section>
 
       {/* News Section */}
-      <section className="py-10 sm:py-12 md:py-16 bg-gray-50">
+      <section className="py-10 sm:py-12 md:py-16 bg-gray-50" aria-label="Berita ESDM Terbaru">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-8 sm:mb-10 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -549,7 +550,7 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Berita ESDM Terbaru</h2>
             <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">Update terkini dari Dinas ESDM Sumatera Barat mengenai program energi terbarukan dan pertambangan berkelanjutan</p>
           </motion.div>
-          
+
           {/* Featured News */}
           <div className="mb-8 sm:mb-10 md:mb-12">
             <motion.div
@@ -562,7 +563,7 @@ export default function Home() {
               {/* Main Featured News */}
               <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="relative h-40 sm:h-48 overflow-hidden">
-                  <Image 
+                  <Image
                     src={news[0].thumbnail}
                     alt={news[0].title}
                     fill
@@ -594,7 +595,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Side News */}
               <div className="space-y-3 sm:space-y-4">
                 {news.slice(1, 3).map((item, index) => (
@@ -643,7 +644,7 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
-          
+
           {/* All News Grid */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
@@ -696,7 +697,7 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-          
+
           {/* Pagination */}
           <motion.div
             className="flex flex-col items-center gap-4 mt-12"
@@ -706,7 +707,7 @@ export default function Home() {
             transition={{ duration: 0.4 }}
           >
             <div className="flex items-center justify-center space-x-2">
-              <button 
+              <button
                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled
               >
@@ -727,7 +728,7 @@ export default function Home() {
                   8
                 </button>
               </div>
-              <button 
+              <button
                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium text-gray-700"
               >
                 Next
@@ -741,9 +742,9 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white" aria-label="Informasi Kontak">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             className="text-center mb-10 sm:mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -755,11 +756,11 @@ export default function Home() {
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Informasi Kontak ESDM</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-              Kami siap melayani dan memberikan informasi terkait energi terbarukan, 
+              Kami siap melayani dan memberikan informasi terkait energi terbarukan,
               pertambangan, dan pengelolaan sumber daya mineral
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12 md:mb-16">
             {[
               {
@@ -801,25 +802,25 @@ export default function Home() {
               >
                 {/* Background Effect */}
                 <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 {/* Icon */}
                 <div className={`relative z-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br ${contact.gradient} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                   {contact.icon}
                 </div>
-                
+
                 {/* Content */}
                 <div className="relative z-10">
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">{contact.title}</h3>
                   <p className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg mb-2 break-words">{contact.primary}</p>
                   <p className="text-gray-600 text-xs sm:text-sm md:text-base">{contact.secondary}</p>
                 </div>
-                
+
                 {/* Decorative Elements */}
                 <div className="absolute top-3 sm:top-4 right-3 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 bg-white/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </motion.div>
             ))}
           </div>
-          
+
           {/* Map Section */}
           <motion.div
             className="relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-100"
@@ -834,7 +835,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12"></div>
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-transparent transform -skew-x-12"></div>
               </div>
-              
+
               {/* Content */}
               <div className="relative z-10 text-center text-blue-900 px-4">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
@@ -843,7 +844,7 @@ export default function Home() {
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Lokasi Kantor ESDM</h3>
                 <p className="text-sm sm:text-base md:text-lg mb-1">Dinas Energi dan Sumber Daya Mineral</p>
                 <p className="text-xs sm:text-sm md:text-base opacity-80 mb-4 sm:mb-6">Pemerintah Provinsi Sumatera Barat</p>
-                
+
                 {/* Action Button */}
                 <button className="bg-blue-600 text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base">
                   Buka di Maps
@@ -851,7 +852,7 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-          
+
           {/* Office Hours */}
           <motion.div
             className="text-center mt-8 sm:mt-10 md:mt-12 p-6 sm:p-8 bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100"
@@ -883,7 +884,7 @@ export default function Home() {
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            <SocialShare 
+            <SocialShare
               url={typeof window !== 'undefined' ? window.location.href : ''}
               title="Dinas ESDM Sumatera Barat - Portal Resmi"
               className="justify-center"

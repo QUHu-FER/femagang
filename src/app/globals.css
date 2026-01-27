@@ -50,40 +50,18 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Utility classes */
-.backdrop-blur-sm {
-  backdrop-filter: blur(4px);
+/* Performance optimizations */
+.animate-float {
+  will-change: transform;
 }
 
-.backdrop-blur-md {
-  backdrop-filter: blur(8px);
-}
-
-.backdrop-blur-lg {
-  backdrop-filter: blur(16px);
-}
-
-/* Line clamp utilities */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

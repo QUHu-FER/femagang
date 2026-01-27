@@ -1,0 +1,16 @@
+{
+    "name": "ESDM Sumatera Barat",
+    "short_name": "ESDM Sumbar",
+    "description": "Website resmi Dinas Energi dan Sumber Daya Mineral Sumatera Barat",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2563eb",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        }
+    ]
+}

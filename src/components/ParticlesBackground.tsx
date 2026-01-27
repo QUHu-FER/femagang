@@ -1,11 +1,25 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Particles from 'react-particles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
 
 const ParticlesBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -24,26 +38,26 @@ const ParticlesBackground = () => {
           enable: false,
           zIndex: -1
         },
-        fpsLimit: 120,
+        fpsLimit: isMobile ? 30 : 60, // Reduced FPS for better performance
         interactivity: {
           events: {
             onClick: {
-              enable: true,
+              enable: !isMobile, // Disable on mobile
               mode: "push",
             },
             onHover: {
-              enable: true,
+              enable: !isMobile, // Disable on mobile
               mode: "repulse",
             },
             resize: true,
           },
           modes: {
             push: {
-              quantity: 4,
+              quantity: 2,
             },
             repulse: {
-              distance: 200,
-              duration: 0.4,
+              distance: 150,
+              duration: 0.3,
             },
           },
         },
@@ -65,7 +79,7 @@ const ParticlesBackground = () => {
               default: "bounce",
             },
             random: false,
-            speed: 1,
+            speed: isMobile ? 0.5 : 1, // Slower on mobile
             straight: false,
           },
           number: {
@@ -73,7 +87,7 @@ const ParticlesBackground = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: isMobile ? 30 : 60, // Fewer particles on mobile
           },
           opacity: {
             value: 0.3,
