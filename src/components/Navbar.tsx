@@ -163,7 +163,7 @@ export default function Navbar() {
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden border border-gray-200">
               <div className="relative w-full h-full p-1">
                 <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_West_Sumatera.png/1200px-Coat_of_arms_West_Sumatera.png"
+                  src="/logo-sumbar.png"
                   alt="Logo Sumatera Barat"
                   className="object-contain"
                   fill
@@ -186,8 +186,8 @@ export default function Navbar() {
             <Link
               href="/"
               className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${isActive('/')
-                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                 }`}
             >
               Beranda
@@ -214,8 +214,8 @@ export default function Navbar() {
                 aria-label="Menu Profil"
                 aria-expanded={activeDropdown === 'Profil'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Profil' || isDropdownActive('Profil')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>Profil</span>
@@ -283,8 +283,8 @@ export default function Navbar() {
                 aria-label="Menu Data dan Informasi"
                 aria-expanded={activeDropdown === 'Data dan Informasi'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Data dan Informasi' || isDropdownActive('Data dan Informasi')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>Data dan Informasi</span>
@@ -352,8 +352,8 @@ export default function Navbar() {
                 aria-label="Menu Media Data"
                 aria-expanded={activeDropdown === 'Media Data'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Media Data' || isDropdownActive('Media Data')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>Media Data</span>
@@ -421,8 +421,8 @@ export default function Navbar() {
                 aria-label="Menu PPID"
                 aria-expanded={activeDropdown === 'PPID'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'PPID' || isDropdownActive('PPID')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>PPID</span>
@@ -490,8 +490,8 @@ export default function Navbar() {
                 aria-label="Menu Download Area"
                 aria-expanded={activeDropdown === 'Download Area'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Download Area' || isDropdownActive('Download Area')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>Download Area</span>
@@ -553,8 +553,8 @@ export default function Navbar() {
             <Link
               href="/kontak"
               className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 whitespace-nowrap ${isActive('/kontak')
-                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                 }`}
             >
               Hubungi Kami
@@ -579,8 +579,8 @@ export default function Navbar() {
                 aria-label="Menu Informasi Pelayanan Publik"
                 aria-expanded={activeDropdown === 'Informasi Pelayanan Publik'}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 relative whitespace-nowrap ${activeDropdown === 'Informasi Pelayanan Publik' || isDropdownActive('Informasi Pelayanan Publik')
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25'
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                   }`}
               >
                 <span>Informasi Pelayanan Publik</span>
@@ -699,8 +699,8 @@ export default function Navbar() {
                   href="/"
                   onClick={handleMenuItemClick}
                   className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${isActive('/')
-                      ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                 >
                   Beranda
@@ -718,16 +718,16 @@ export default function Navbar() {
                         aria-label={`Menu ${menuName}`}
                         aria-expanded={activeDropdown === menuName}
                         className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${activeDropdown === menuName
-                            ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
-                            : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                          ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
+                          : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                           }`}
                       >
                         <span>{menuName}</span>
                         <div className="flex items-center space-x-2">
                           {/* Badge indicator for number of items */}
                           <span className={`text-xs px-2 py-1 rounded-full ${activeDropdown === menuName
-                              ? 'bg-white/20 text-white'
-                              : 'bg-gray-200 text-gray-600'
+                            ? 'bg-white/20 text-white'
+                            : 'bg-gray-200 text-gray-600'
                             }`}>
                             {menuItems.length}
                           </span>
@@ -802,8 +802,8 @@ export default function Navbar() {
                   href="/kontak"
                   onClick={handleMenuItemClick}
                   className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${isActive('/kontak')
-                      ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                 >
                   Hubungi Kami
@@ -816,15 +816,15 @@ export default function Navbar() {
                     aria-label="Menu Informasi Pelayanan Publik"
                     aria-expanded={activeDropdown === 'Informasi Pelayanan Publik'}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all duration-300 relative ${activeDropdown === 'Informasi Pelayanan Publik'
-                        ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
-                        : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg'
+                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                       }`}
                   >
                     <span>Informasi Pelayanan Publik</span>
                     <div className="flex items-center space-x-2">
                       <span className={`text-xs px-2 py-1 rounded-full ${activeDropdown === 'Informasi Pelayanan Publik'
-                          ? 'bg-white/20 text-white'
-                          : 'bg-gray-200 text-gray-600'
+                        ? 'bg-white/20 text-white'
+                        : 'bg-gray-200 text-gray-600'
                         }`}>
                         {dropdownMenus['Informasi Pelayanan Publik'].length}
                       </span>
