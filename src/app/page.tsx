@@ -288,7 +288,7 @@ export default function Home() {
             <button
               key={index}
               onClick={() => handleSlideChange(index)}
-              className={`group relative transition-all duration-500 ${index === activeSlide ? 'scale-110' : 'hover:scale-105'
+              className={`group relative transition-all duration-500 w-12 h-12 flex items-center justify-center ${index === activeSlide ? 'scale-110' : 'hover:scale-105'
                 }`}
               aria-label={`Slide ${index + 1}: ${slide.title}`}
             >
