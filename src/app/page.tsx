@@ -195,11 +195,8 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <motion.h1
+                    <h1
                       className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-white leading-tight px-2"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5 }}
                     >
                       <span className="block text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-blue-200 mb-1 sm:mb-2 md:mb-3">
                         {slide.title}
@@ -222,22 +219,16 @@ export default function Home() {
                           />
                         </span>
                       </span>
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
+                    <p
                       className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 text-blue-100 max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto leading-relaxed px-4"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.1, duration: 0.5 }}
                     >
                       {slide.description}
-                    </motion.p>
+                    </p>
 
-                    <motion.div
+                    <div
                       className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 mb-12 sm:mb-16"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
                     >
                       <Link href="/layanan" className="w-full sm:w-auto">
                         <motion.div
@@ -262,7 +253,7 @@ export default function Home() {
                           <span>Tonton Profil</span>
                         </motion.div>
                       </Link>
-                    </motion.div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -274,6 +265,7 @@ export default function Home() {
         <button
           onClick={() => handleSlideChange(activeSlide === 0 ? slides.length - 1 : activeSlide - 1)}
           className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-20"
+          aria-label="Previous Slide"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -283,6 +275,7 @@ export default function Home() {
         <button
           onClick={() => handleSlideChange(activeSlide === slides.length - 1 ? 0 : activeSlide + 1)}
           className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-20"
+          aria-label="Next Slide"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -349,6 +342,7 @@ export default function Home() {
 
       {/* Floating News Cards - Berita Terkini dengan Thumbnail */}
       <section className="py-8 sm:py-12 bg-gradient-to-b from-gray-50 to-white" aria-label="Berita Terkini">
+        <h2 className="sr-only">Berita Terkini</h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {news.map((item, index) => (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -47,15 +48,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <script
+        <Script
           src="https://cdn.userway.org/widget.js"
+          strategy="lazyOnload"
           data-account="aLsAun4U5c"
           data-position="5"
           data-size="medium"
           data-color="#2563eb"
-          async
-          defer
-        ></script>
+        />
       </body>
     </html>
   );
