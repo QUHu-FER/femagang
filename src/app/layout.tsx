@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -23,13 +23,14 @@ export const metadata: Metadata = {
   },
   keywords: ["ESDM", "Sumatera Barat", "Energi", "Pertambangan", "Sumber Daya Mineral"],
   authors: [{ name: "Dinas ESDM Sumbar" }],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: "#2563eb",
   manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({
@@ -42,7 +43,6 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#2563eb" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -12,7 +12,7 @@ import {
   FireIcon,
   PlayIcon
 } from '@heroicons/react/24/outline';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Layout from '@/components/Layout';
 import dynamic from 'next/dynamic';
 
@@ -47,6 +47,32 @@ export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Dynamic news from MongoDB
+  interface NewsItem {
+    _id: string;
+    title: string;
+    slug: string;
+    excerpt: string;
+    category: string;
+    image: string;
+    views: number;
+    createdAt: string;
+  }
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+
+  const fetchNews = useCallback(async () => {
+    try {
+      const res = await fetch('/api/berita?limit=4&sortBy=createdAt');
+      const data = await res.json();
+      if (data.success) setNews(data.data);
+    } catch { /* silent */ } finally {
+      setNewsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { fetchNews(); }, [fetchNews]);
+
   const slides = [
     {
       title: "Energi Berkelanjutan",
@@ -79,44 +105,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  const news = [
-    {
-      id: 1,
-      title: "Roadmap Energi Terbarukan Sumatera Barat 2024-2030",
-      date: "13 Juni 2025",
-      category: "Energi",
-      views: 380,
-      excerpt: "Rencana strategis pengembangan energi terbarukan di Sumatera Barat yang mencakup solar, hidro, dan geothermal untuk mencapai target net zero emission 2060.",
-      thumbnail: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800"
-    },
-    {
-      id: 2,
-      title: "Perjanjian Kinerja Dinas ESDM Sumatera Barat 2024",
-      date: "13 Juni 2025",
-      category: "Program",
-      views: 351,
-      excerpt: "Komitmen kinerja dalam pengelolaan energi dan sumber daya mineral dengan fokus pada keberlanjutan dan kesejahteraan masyarakat.",
-      thumbnail: "https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800"
-    },
-    {
-      id: 3,
-      title: "Rencana Aksi Pengelolaan Pertambangan Berkelanjutan 2024",
-      date: "13 Juni 2025",
-      category: "Pertambangan",
-      views: 348,
-      excerpt: "Strategi pengelolaan pertambangan yang memperhatikan aspek lingkungan dan pemberdayaan masyarakat sekitar area tambang.",
-      thumbnail: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=800"
-    },
-    {
-      id: 4,
-      title: "Sosialisasi Keselamatan Pertambangan Mineral dan Batubara",
-      date: "12 Juni 2025",
-      category: "Sosialisasi",
-      views: 290,
-      excerpt: "Kegiatan sosialisasi untuk meningkatkan pemahaman dan penerapan keselamatan kerja di sektor pertambangan mineral dan batubara.",
-      thumbnail: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800"
-    }
-  ];
+  // news state is now declared above and fetched from MongoDB
 
   const services = [
     {
@@ -355,59 +344,73 @@ export default function Home() {
         <h2 className="sr-only">Berita Terkini</h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {news.map((item, index) => (
-              <motion.div
-                key={item.id}
-                className="relative group"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-              >
-                {/* Glassmorphism Card */}
-                <div className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden flex flex-col h-full">
-                  {/* Thumbnail */}
-                  <div className="h-32 sm:h-36 w-full bg-gradient-to-br from-blue-100 via-white/30 to-purple-100 flex items-center justify-center overflow-hidden">
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.title}
-                        fill
-                        className="object-contain transition-transform duration-300 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        placeholder="blur"
-                        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex-1 flex flex-col p-6 sm:p-8">
-                    {/* Kategori & Tanggal */}
-                    <div className="flex items-center mb-2">
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                        {item.category}
-                      </span>
-                      <span className="text-gray-500 text-xs ml-3">{item.date}</span>
-                    </div>
-                    {/* Judul */}
-                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
-                      {item.title}
-                    </h3>
-                    {/* Excerpt */}
-                    <p className="text-gray-600 mb-4 line-clamp-3 text-xs sm:text-sm flex-1">{item.excerpt}</p>
-                    {/* Footer */}
-                    <div className="flex items-center justify-between mt-auto pt-2">
-                      <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-xs sm:text-sm">
-                        Baca Selengkapnya
-                        <ChevronRightIcon className="w-4 h-4 ml-1" />
-                      </button>
-                      <span className="text-gray-500 text-xs flex items-center">
-                        👁️ {item.views}
-                      </span>
-                    </div>
+            {newsLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="rounded-2xl bg-white/80 shadow-2xl overflow-hidden animate-pulse flex flex-col h-full">
+                  <div className="h-32 sm:h-36 bg-gray-200" />
+                  <div className="p-6 space-y-3 flex-1">
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-4 bg-gray-200 rounded w-4/5" />
                   </div>
                 </div>
-              </motion.div>
-            ))}
+              ))
+              : news.map((item, index) => (
+                <motion.div
+                  key={item._id}
+                  className="relative group"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                >
+                  {/* Glassmorphism Card */}
+                  <Link href={`/berita/${item.slug}`} className="relative bg-white/80 backdrop-blur-md border border-white/20 rounded-2xl p-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:bg-white/90 overflow-hidden flex flex-col h-full block">
+                    {/* Thumbnail */}
+                    <div className="h-32 sm:h-36 w-full bg-gradient-to-br from-blue-100 via-white/30 to-purple-100 flex items-center justify-center overflow-hidden">
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          placeholder="blur"
+                          blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                          loading="lazy"
+                          unoptimized
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col p-6 sm:p-8">
+                      {/* Kategori & Tanggal */}
+                      <div className="flex items-center mb-2">
+                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                          {item.category}
+                        </span>
+                        <span className="text-gray-500 text-xs ml-3">
+                          {new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </span>
+                      </div>
+                      {/* Judul */}
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2 hover:text-blue-600 transition-colors">
+                        {item.title}
+                      </h3>
+                      {/* Excerpt */}
+                      <p className="text-gray-600 mb-4 line-clamp-3 text-xs sm:text-sm flex-1">{item.excerpt}</p>
+                      {/* Footer */}
+                      <div className="flex items-center justify-between mt-auto pt-2">
+                        <span className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-xs sm:text-sm">
+                          Baca Selengkapnya
+                          <ChevronRightIcon className="w-4 h-4 ml-1" />
+                        </span>
+                        <span className="text-gray-500 text-xs flex items-center">
+                          👁️ {item.views}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
           </div>
         </div>
       </section>
@@ -567,86 +570,109 @@ export default function Home() {
               transition={{ duration: 0.4 }}
             >
               {/* Main Featured News */}
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative h-40 sm:h-48 overflow-hidden">
-                  <Image
-                    src={news[0].thumbnail}
-                    alt={news[0].title}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-                  />
-                </div>
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-center mb-3">
-                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                      {news[0].category}
-                    </span>
-                    <span className="text-gray-500 text-xs sm:text-sm ml-3">{news[0].date}</span>
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
-                    {news[0].title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm sm:text-base">{news[0].excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm sm:text-base">
-                      Baca Selengkapnya
-                      <ChevronRightIcon className="w-4 h-4 ml-1" />
-                    </button>
-                    <span className="text-gray-500 text-xs sm:text-sm flex items-center">
-                      👁️ {news[0].views}
-                    </span>
+              {newsLoading ? (
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+                  <div className="h-40 sm:h-48 bg-gray-200" />
+                  <div className="p-4 sm:p-6 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-4 bg-gray-200 rounded w-5/6" />
                   </div>
                 </div>
-              </div>
+              ) : news[0] ? (
+                <Link href={`/berita/${news[0].slug}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow block group">
+                  <div className="relative h-40 sm:h-48 overflow-hidden">
+                    <Image
+                      src={news[0].image}
+                      alt={news[0].title}
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center mb-3">
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                        {news[0].category}
+                      </span>
+                      <span className="text-gray-500 text-xs sm:text-sm ml-3">{new Date(news[0].createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                      {news[0].title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3 text-sm sm:text-base">{news[0].excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm sm:text-base">
+                        Baca Selengkapnya
+                        <ChevronRightIcon className="w-4 h-4 ml-1" />
+                      </span>
+                      <span className="text-gray-500 text-xs sm:text-sm flex items-center">
+                        👁️ {news[0].views}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ) : null}
 
               {/* Side News */}
               <div className="space-y-3 sm:space-y-4">
-                {news.slice(1, 3).map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                  >
-                    <div className="flex">
-                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 overflow-hidden flex-shrink-0">
-                        <Image
-                          src={item.thumbnail}
-                          alt={item.title}
-                          fill
-                          className="object-cover hover:scale-105 transition-transform duration-300"
-                          sizes="(max-width: 640px) 80px, 96px"
-                          placeholder="blur"
-                          blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(96, 96))}`}
-                        />
-                      </div>
-                      <div className="p-3 sm:p-4 flex-1">
-                        <div className="flex items-center mb-2">
-                          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">
-                            {item.category}
-                          </span>
-                          <span className="text-gray-500 text-xs ml-2">{item.date}</span>
-                        </div>
-                        <h4 className="font-bold text-gray-900 mb-2 line-clamp-2 text-sm hover:text-blue-600 transition-colors cursor-pointer">
-                          {item.title}
-                        </h4>
-                        <div className="flex items-center justify-between">
-                          <button className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium">
-                            Baca
-                          </button>
-                          <span className="text-gray-500 text-xs flex items-center">
-                            👁️ {item.views}
-                          </span>
-                        </div>
+                {newsLoading
+                  ? Array.from({ length: 2 }).map((_, i) => (
+                    <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse flex">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 flex-shrink-0" />
+                      <div className="p-3 sm:p-4 flex-1 space-y-2">
+                        <div className="h-3 bg-gray-200 rounded w-1/2" />
+                        <div className="h-3 bg-gray-200 rounded w-full" />
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  ))
+                  : news.slice(1, 3).map((item, index) => (
+                    <motion.div
+                      key={item._id}
+                      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <Link href={`/berita/${item.slug}`} className="flex group">
+                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 overflow-hidden flex-shrink-0">
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            fill
+                            className="object-cover hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 640px) 80px, 96px"
+                            placeholder="blur"
+                            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(96, 96))}`}
+                            unoptimized
+                          />
+                        </div>
+                        <div className="p-3 sm:p-4 flex-1">
+                          <div className="flex items-center mb-2">
+                            <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">
+                              {item.category}
+                            </span>
+                            <span className="text-gray-500 text-xs ml-2">{new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>
+                          </div>
+                          <h4 className="font-bold text-gray-900 mb-2 line-clamp-2 text-sm group-hover:text-blue-600 transition-colors">
+                            {item.title}
+                          </h4>
+                          <div className="flex items-center justify-between">
+                            <span className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm font-medium">
+                              Baca
+                            </span>
+                            <span className="text-gray-500 text-xs flex items-center">
+                              👁️ {item.views}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
               </div>
             </motion.div>
           </div>
@@ -659,49 +685,63 @@ export default function Home() {
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.4 }}
           >
-            {news.map((item, index) => (
-              <motion.div
-                key={item.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-              >
-                <div className="relative h-40 sm:h-48 overflow-hidden">
-                  <Image
-                    src={item.thumbnail}
-                    alt={item.title}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-                  />
-                </div>
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-center mb-3">
-                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                      {item.category}
-                    </span>
-                    <span className="text-gray-500 text-xs sm:text-sm ml-3">{item.date}</span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm">{item.excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm">
-                      Baca Selengkapnya
-                      <ChevronRightIcon className="w-4 h-4 ml-1" />
-                    </button>
-                    <span className="text-gray-500 text-xs sm:text-sm flex items-center">
-                      👁️ {item.views}
-                    </span>
+            {newsLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+                  <div className="h-40 sm:h-48 bg-gray-200" />
+                  <div className="p-4 sm:p-6 space-y-3">
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-3 bg-gray-200 rounded w-full" />
                   </div>
                 </div>
-              </motion.div>
-            ))}
+              ))
+              : news.map((item, index) => (
+                <motion.div
+                  key={item._id}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <Link href={`/berita/${item.slug}`} className="block group">
+                    <div className="relative h-40 sm:h-48 overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                        unoptimized
+                      />
+                    </div>
+                    <div className="p-4 sm:p-6">
+                      <div className="flex items-center mb-3">
+                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                          {item.category}
+                        </span>
+                        <span className="text-gray-500 text-xs sm:text-sm ml-3">{new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3 text-sm">{item.excerpt}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-blue-600 hover:text-blue-700 font-medium flex items-center text-sm">
+                          Baca Selengkapnya
+                          <ChevronRightIcon className="w-4 h-4 ml-1" />
+                        </span>
+                        <span className="text-gray-500 text-xs sm:text-sm flex items-center">
+                          👁️ {item.views}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
           </motion.div>
 
           {/* Pagination */}

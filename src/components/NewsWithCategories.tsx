@@ -1,179 +1,139 @@
 'use client';
 
-import { useState } from 'react';
-import { FaCalendarAlt, FaTag, FaEye, FaArrowRight } from 'react-icons/fa';
+import { useState, useEffect, useCallback } from 'react';
+import { FaCalendarAlt, FaTag, FaEye, FaArrowRight, FaSearch, FaTimes } from 'react-icons/fa';
 import { MdOutlineEnergySavingsLeaf } from 'react-icons/md';
 import Image from 'next/image';
+import Link from 'next/link';
 import Pagination from '@/components/Pagination';
 
 interface NewsItem {
-  id: string;
+  _id: string;
   title: string;
+  slug: string;
   excerpt: string;
   category: string;
-  date: string;
+  createdAt: string;
   author: string;
   views: number;
-  thumbnail: string;
+  image: string;
   tags: string[];
   featured: boolean;
+}
+
+interface PaginationData {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 interface NewsWithCategoriesProps {
   className?: string;
 }
 
-export default function NewsWithCategories({ className = "" }: NewsWithCategoriesProps) {
+const CATEGORY_LABELS: Record<string, string> = {
+  'all': 'Semua Berita',
+  'energi-terbarukan': 'Energi Terbarukan',
+  'pertambangan': 'Pertambangan',
+  'kebijakan': 'Kebijakan',
+  'pengumuman': 'Pengumuman',
+  'kegiatan': 'Kegiatan',
+  'migas': 'Migas',
+};
+
+export default function NewsWithCategories({ className = '' }: NewsWithCategoriesProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedTag, setSelectedTag] = useState('');
   const [sortBy, setSortBy] = useState('latest');
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState('');
+  const [search, setSearch] = useState('');
   const itemsPerPage = 6;
 
-  // Base news data
-  const baseNewsData: NewsItem[] = [
-    {
-      id: '1',
-      title: 'Sumbar Targetkan 30% Energi Terbarukan pada 2030',
-      excerpt: 'Pemerintah Provinsi Sumatera Barat menargetkan kontribusi energi terbarukan mencapai 30 persen dari total konsumsi energi pada tahun 2030.',
-      category: 'energi-terbarukan',
-      date: '2024-01-20',
-      author: 'Tim ESDM Sumbar',
-      views: 1250,
-      thumbnail: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&auto=format&fit=crop&q=60',
-      tags: ['Solar Panel', 'Geothermal', 'Biomassa'],
-      featured: true
-    },
-    {
-      id: '2',
-      title: 'Revisi Peraturan Pertambangan Mendukung Investasi',
-      excerpt: 'Dinas ESDM Sumbar melakukan revisi peraturan pertambangan untuk menarik investasi sambil menjaga kelestarian lingkungan.',
-      category: 'pertambangan',
-      date: '2024-01-18',
-      author: 'Humas ESDM',
-      views: 890,
-      thumbnail: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format&fit=crop&q=60',
-      tags: ['Izin Tambang', 'Regulasi', 'Investasi'],
-      featured: false
-    },
-    {
-      id: '3',
-      title: 'Sosialisasi Program Hemat Energi di Sekolah-Sekolah',
-      excerpt: 'Dinas ESDM mengadakan program sosialisasi hemat energi untuk meningkatkan kesadaran siswa tentang penggunaan energi yang efisien.',
-      category: 'kegiatan',
-      date: '2024-01-15',
-      author: 'Bidang Energi',
-      views: 650,
-      thumbnail: 'https://images.unsplash.com/photo-1427751840561-9852520f8ce8?w=800&auto=format&fit=crop&q=60',
-      tags: ['Sosialisasi', 'Lingkungan'],
-      featured: false
-    },
-    {
-      id: '4',
-      title: 'Pembangunan PLTS Rooftop di Gedung Pemerintahan',
-      excerpt: 'Inisiatif pemasangan panel surya di atap gedung-gedung pemerintahan untuk mengurangi konsumsi listrik dari PLN.',
-      category: 'energi-terbarukan',
-      date: '2024-01-12',
-      author: 'Bidang Energi',
-      views: 1120,
-      thumbnail: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&auto=format&fit=crop&q=60',
-      tags: ['Solar Panel', 'Teknologi'],
-      featured: true
-    },
-    {
-      id: '5',
-      title: 'Pengumuman Hasil Tender Konsultan Teknis',
-      excerpt: 'Hasil seleksi tender untuk konsultan teknis proyek pengembangan energi terbarukan di kawasan pesisir Sumbar.',
-      category: 'pengumuman',
-      date: '2024-01-10',
-      author: 'Bagian Pengadaan',
-      views: 445,
-      thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60',
-      tags: ['Regulasi'],
-      featured: false
-    },
-    {
-      id: '6',
-      title: 'Potensi Energi Panas Bumi Sumbar Capai 835 MW',
-      excerpt: 'Studi terbaru menunjukkan potensi energi panas bumi di Sumatera Barat mencapai 835 MW yang dapat dikembangkan.',
-      category: 'energi-terbarukan',
-      date: '2024-01-08',
-      author: 'Tim Penelitian',
-      views: 980,
-      thumbnail: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&auto=format&fit=crop&q=60',
-      tags: ['Geothermal', 'Teknologi'],
-      featured: false
-    }
-  ];
-  
-  // Generate more news items for pagination
-  const generateMoreNews = (baseItem: NewsItem, count: number): NewsItem[] => {
-    const result: NewsItem[] = [];
-    for (let i = 0; i < count; i++) {
-      result.push({
-        ...baseItem,
-        id: `${baseItem.id}-${i}`,
-        title: `${baseItem.title} ${i + 2}`,
-        views: Math.floor(Math.random() * 1000) + 100,
-        date: new Date(new Date(baseItem.date).getTime() + i * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [pagination, setPagination] = useState<PaginationData>({ total: 0, page: 1, limit: 6, totalPages: 1 });
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const fetchNews = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const params = new URLSearchParams({
+        page: String(currentPage),
+        limit: String(itemsPerPage),
+        sortBy: sortBy === 'latest' ? 'createdAt' : sortBy === 'oldest' ? 'oldest' : sortBy === 'most-viewed' ? 'views' : 'createdAt',
+        ...(selectedCategory !== 'all' && { category: selectedCategory }),
+        ...(search && { search }),
       });
+
+      const res = await fetch(`/api/berita?${params}`);
+      if (!res.ok) throw new Error('Gagal mengambil data');
+      const data = await res.json();
+
+      if (data.success) {
+        setNews(data.data);
+        setPagination(data.pagination);
+      }
+    } catch {
+      setError('Gagal memuat berita. Coba muat ulang halaman.');
+    } finally {
+      setLoading(false);
     }
-    return result;
+  }, [currentPage, selectedCategory, sortBy, search, itemsPerPage]);
+
+  // Single request gets ALL counts (total + all categories) via $facet aggregation
+  const fetchCategoryCounts = useCallback(async () => {
+    try {
+      const res = await fetch('/api/berita/stats');
+      const data = await res.json();
+      if (data.success) {
+        setCategoryCounts({
+          all: data.data.total,
+          ...data.data.categoryCounts,   // { 'kegiatan': 166, 'migas': 166, ... }
+        });
+      }
+    } catch { /* silent */ }
+  }, []);
+
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  useEffect(() => {
+    fetchCategoryCounts();
+  }, [fetchCategoryCounts]);
+
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
   };
 
-  // Generate additional news items for each base item
-  const allNewsData = [...baseNewsData];
-  baseNewsData.forEach(news => {
-    allNewsData.push(...generateMoreNews(news, 3)); // Generate 3 more items for each news
-  });
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearch(searchInput);
+    setCurrentPage(1);
+  };
 
-  // Mock data untuk demo
-  const categories = [
-    { id: 'all', name: 'Semua Berita', count: allNewsData.length },
-    { id: 'energi-terbarukan', name: 'Energi Terbarukan', count: allNewsData.filter(n => n.category === 'energi-terbarukan').length },
-    { id: 'pertambangan', name: 'Pertambangan', count: allNewsData.filter(n => n.category === 'pertambangan').length },
-    { id: 'kebijakan', name: 'Kebijakan', count: allNewsData.filter(n => n.category === 'kebijakan').length },
-    { id: 'pengumuman', name: 'Pengumuman', count: allNewsData.filter(n => n.category === 'pengumuman').length },
-    { id: 'kegiatan', name: 'Kegiatan', count: allNewsData.filter(n => n.category === 'kegiatan').length }
-  ];
+  const handleClearSearch = () => {
+    setSearchInput('');
+    setSearch('');
+    setCurrentPage(1);
+  };
 
-  const allTags = [
-    'Solar Panel', 'Geothermal', 'Izin Tambang', 'Regulasi', 'Sosialisasi', 
-    'Biomassa', 'Hidroelektrik', 'Lingkungan', 'Investasi', 'Teknologi'
-  ];
-
-  const filteredNews = allNewsData.filter(item => {
-    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-    const matchesTag = !selectedTag || item.tags.includes(selectedTag);
-    return matchesCategory && matchesTag;
-  });
-
-  const sortedNews = [...filteredNews].sort((a, b) => {
-    switch (sortBy) {
-      case 'latest':
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      case 'oldest':
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      case 'most-viewed':
-        return b.views - a.views;
-      case 'alphabetical':
-        return a.title.localeCompare(b.title);
-      default:
-        return 0;
-    }
-  });
-
-  const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedNews = sortedNews.slice(startIndex, startIndex + itemsPerPage);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('id-ID', {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('id-ID', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
-  };
+
+  const categories = Object.entries(CATEGORY_LABELS).map(([id, name]) => ({
+    id,
+    name,
+    count: categoryCounts[id] ?? 0,
+  }));
 
   return (
     <div className={`bg-gradient-to-b from-blue-600 via-blue-500 to-white ${className}`}>
@@ -181,7 +141,7 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
         {/* Header */}
         <div className="text-center mb-12 pt-12">
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-md">
-            Berita & Informasi ESDM
+            Berita &amp; Informasi ESDM
           </h1>
           <p className="text-xl text-white max-w-3xl mx-auto drop-shadow">
             Dapatkan informasi terbaru tentang energi, sumber daya mineral, dan kegiatan Dinas ESDM Sumatera Barat
@@ -190,177 +150,171 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
 
         {/* Filters */}
         <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 mb-8 shadow-lg">
+          {/* Search bar */}
+          <form onSubmit={handleSearchSubmit} className="flex gap-2 mb-6">
+            <div className="relative flex-1">
+              <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Cari berita..."
+                className="w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-sm"
+              />
+              {searchInput && (
+                <button type="button" onClick={handleClearSearch} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  <FaTimes className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+            <button type="submit" className="px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors">
+              Cari
+            </button>
+          </form>
+
           {/* Categories */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-blue-600 mb-4">
-              Kategori Berita
-            </h3>
+            <h3 className="text-lg font-semibold text-blue-600 mb-4">Kategori Berita</h3>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => {
-                    setSelectedCategory(category.id);
-                    setCurrentPage(1);
-                  }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category.id
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600'
-                  }`}
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
+                    }`}
                 >
-                  {category.name} ({category.count})
+                  {category.name}{category.count > 0 ? ` (${category.count})` : ''}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Tags and Sort */}
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Tags Filter */}
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Filter berdasarkan Tag
-              </label>
-              <select
-                value={selectedTag}
-                onChange={(e) => {
-                  setSelectedTag(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
-              >
-                <option value="">Semua Tag</option>
-                {allTags.map((tag) => (
-                  <option key={tag} value={tag}>{tag}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Sort */}
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Urutkan berdasarkan
-              </label>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
-              >
-                <option value="latest">Terbaru</option>
-                <option value="oldest">Terlama</option>
-                <option value="most-viewed">Paling Banyak Dilihat</option>
-                <option value="alphabetical">A-Z</option>
-              </select>
-            </div>
+          {/* Sort */}
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium text-gray-700 whitespace-nowrap">Urutkan:</label>
+            <select
+              value={sortBy}
+              onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+              className="px-3 py-2 border border-gray-200 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-sm"
+            >
+              <option value="latest">Terbaru</option>
+              <option value="oldest">Terlama</option>
+              <option value="most-viewed">Paling Banyak Dilihat</option>
+            </select>
           </div>
         </div>
 
         {/* Results Info */}
         <div className="flex justify-between items-center mb-6">
           <p className="text-gray-600">
-            Menampilkan {startIndex + 1}-{Math.min(startIndex + itemsPerPage, sortedNews.length)} dari {sortedNews.length} berita
+            {loading
+              ? 'Memuat...'
+              : `Menampilkan ${news.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}–${Math.min(currentPage * itemsPerPage, pagination.total)} dari ${pagination.total} berita`}
           </p>
-          {(selectedCategory !== 'all' || selectedTag) && (
+          {(selectedCategory !== 'all' || search) && (
             <button
-              onClick={() => {
-                setSelectedCategory('all');
-                setSelectedTag('');
-                setCurrentPage(1);
-              }}
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+              onClick={() => { setSelectedCategory('all'); setSearch(''); setSearchInput(''); setCurrentPage(1); }}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
             >
-              Hapus Filter
+              <FaTimes className="w-3 h-3" /> Hapus Filter
             </button>
           )}
         </div>
 
         {/* News Grid */}
-        {paginatedNews.length > 0 ? (
+        {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {paginatedNews.map((news) => (
-              <article key={news.id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                {/* Featured Badge */}
-                {news.featured && (
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg animate-pulse">
+                <div className="h-48 bg-gray-200" />
+                <div className="p-6 space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="h-4 bg-gray-200 rounded w-full" />
+                  <div className="h-4 bg-gray-200 rounded w-5/6" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <MdOutlineEnergySavingsLeaf className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-600">{error}</p>
+          </div>
+        ) : news.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {news.map((item) => (
+              <article key={item._id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group relative">
+                {item.featured && (
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Unggulan
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium shadow">
+                      ⭐ Unggulan
                     </span>
                   </div>
                 )}
 
                 {/* Thumbnail */}
-                <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
+                <div className="relative h-48 bg-gray-200 overflow-hidden">
                   <Image
-                    src={news.thumbnail}
-                    alt={news.title}
+                    src={item.image || 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800'}
+                    alt={item.title}
                     fill
-                    className="object-cover"
-                    onError={(e: { currentTarget: HTMLImageElement }) => {
-                      e.currentTarget.src = 'data:image/svg+xml,' + encodeURIComponent(`
-                        <svg width="400" height="250" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="100%" height="100%" fill="#f3f4f6"/>
-                          <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#9ca3af" font-family="Arial, sans-serif" font-size="18">No Image</text>
-                        </svg>
-                      `);
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    unoptimized
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800';
                     }}
                   />
                   <div className="absolute top-4 right-4">
-                    <span className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs">
-                      {categories.find(cat => cat.id === news.category)?.name}
+                    <span className="bg-black/50 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
+                      {CATEGORY_LABELS[item.category] || item.category}
                     </span>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
-                    {news.title}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {item.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {news.excerpt}
-                  </p>
+                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm">{item.excerpt}</p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {news.tags.slice(0, 2).map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs"
-                      >
-                        <FaTag className="inline w-3 h-3 mr-1" />
-                        {tag}
-                      </span>
-                    ))}
-                    {news.tags.length > 2 && (
-                      <span className="text-gray-500 text-xs">
-                        +{news.tags.length - 2} lainnya
-                      </span>
-                    )}
+                  {item.tags?.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {item.tags.slice(0, 2).map((tag) => (
+                        <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs flex items-center gap-1">
+                          <FaTag className="w-2.5 h-2.5" />{tag}
+                        </span>
+                      ))}
+                      {item.tags.length > 2 && (
+                        <span className="text-gray-400 text-xs">+{item.tags.length - 2}</span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Meta */}
+                  <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
+                    <span className="flex items-center gap-1">
+                      <FaCalendarAlt className="text-blue-400" />
+                      {formatDate(item.createdAt)}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <FaEye className="text-blue-400" />
+                      {item.views?.toLocaleString('id-ID') || 0}
+                    </span>
                   </div>
 
-                  {/* Meta Info */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <span className="flex items-center gap-1">
-                        <FaCalendarAlt className="w-3 h-3 text-blue-500" />
-                        {formatDate(news.date)}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <FaEye className="w-3 h-3 text-blue-500" />
-                        {news.views.toLocaleString()}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600 font-medium">
-                        {news.author}
-                      </span>
-                      <button className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
-                        Baca Selengkapnya
-                        <FaArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500 font-medium">{item.author}</span>
+                    <Link
+                      href={`/berita/${item.slug}`}
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                    >
+                      Baca Selengkapnya
+                      <FaArrowRight className="w-3 h-3" />
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -369,22 +323,18 @@ export default function NewsWithCategories({ className = "" }: NewsWithCategorie
         ) : (
           <div className="text-center py-12">
             <MdOutlineEnergySavingsLeaf className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Tidak ada berita ditemukan
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Coba ubah filter atau kata kunci pencarian Anda
-            </p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Tidak ada berita ditemukan</h3>
+            <p className="text-gray-500 text-sm">Coba ubah filter atau kata kunci pencarian Anda</p>
           </div>
         )}
 
         {/* Pagination */}
-        {totalPages > 1 && (
+        {pagination.totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            className="mt-8"
+            totalPages={pagination.totalPages}
+            onPageChange={(p) => { setCurrentPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="mt-4 mb-12"
           />
         )}
       </div>
