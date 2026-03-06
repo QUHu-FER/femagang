@@ -1,15 +1,8 @@
 import dns from 'dns';
 import mongoose from 'mongoose';
 
-// Force Node.js to use Cloudflare + Google DNS for all lookups (including MongoDB SRV).
-// This prevents ETIMEOUT on networks where ISP DNS blocks SRV records.
+// Force Cloudflare + Google DNS — prevents ETIMEOUT on SRV lookups
 dns.setServers(['1.1.1.1', '8.8.8.8', '1.0.0.1', '8.8.4.4']);
-
-const MONGODB_URI = process.env.MONGODB_URI!;
-
-if (!MONGODB_URI) {
-    throw new Error('MONGODB_URI belum diset di .env.local');
-}
 
 interface MongooseCache {
     conn: typeof mongoose | null;
@@ -25,6 +18,12 @@ if (!globalWithMongoose.mongoose) {
 const cached = globalWithMongoose.mongoose;
 
 async function dbConnect(): Promise<typeof mongoose> {
+    // Validate at runtime (not module load / build time)
+    const MONGODB_URI = process.env.MONGODB_URI;
+    if (!MONGODB_URI) {
+        throw new Error('MONGODB_URI belum diset di environment variables');
+    }
+
     // Return existing healthy connection
     if (cached.conn && mongoose.connection.readyState === 1) {
         return cached.conn;
